@@ -10,23 +10,25 @@
         <div class="md-layout">
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
+              <label>Username</label>
               <md-input v-model="user.username" type="text"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
+              <label>Name</label>
               <md-input v-model="user.name" type="text"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
+              <label>Email</label>
               <md-input v-model="user.email" type="email" disabled></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>Photo</label>
-              <input type="file" id="file" ref="file" v-on:change="handleFileUpload()">
+              <input type="file" id="file" ref="file" accept="image/*" v-on:change="handleFileUpload()">
             </md-field>
           </div>
           <div class="md-layout-item md-size-100 text-right">

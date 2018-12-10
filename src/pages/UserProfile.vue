@@ -11,17 +11,23 @@
 
         </user-card>
       </div>
+      <div class="md-layout-item md-medium-size-100 md-size-66">
+          <change-password data-background-color="grey">
+
+          </change-password>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { EditProfileForm, UserCard } from "@/pages";
+import { EditProfileForm, UserCard, ChangePassword } from "@/pages";
 
 export default {
   components: {
     EditProfileForm,
-    UserCard
+    UserCard, 
+    ChangePassword,
   }
 };
 </script>

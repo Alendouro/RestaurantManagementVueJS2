@@ -6,6 +6,7 @@ import App from "./App";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import store from './stores/store.js';
+import Toasted from 'vue-toasted';
 
 
 // router setup
@@ -34,6 +35,7 @@ Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 Vue.use(VueAxios, axios);
+Vue.use(Toasted);
 
 /*
 * Fazer o axios assumir uma URL por padrão
