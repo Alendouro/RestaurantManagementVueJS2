@@ -41,6 +41,7 @@ Vue.use(Toasted);
 * Fazer o axios assumir uma URL por padrão
 * */
 axios.defaults.baseURL = "http://restaurantmanagement.test";
+axios.defaults.headers.common.Authorization = "Bearer " + store.state.token;
 
 
 Vue.prototype.$Chartist = Chartist;
@@ -55,3 +56,4 @@ new Vue({
     Chartist: Chartist
   }
 });
+
