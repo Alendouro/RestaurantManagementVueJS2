@@ -62,12 +62,6 @@ export default {
             swal(' ', 'There was an error while processing the request');
           }
         });
-
-      this.$http.get()
-        .then(function (response) {
-          this.makePagination(response);
-          this.$set('items', response.data.data);
-        });
     },
     imageItem(itemUrl){
       return 'http://restaurantmanagement.test/storage/items/' + itemUrl;

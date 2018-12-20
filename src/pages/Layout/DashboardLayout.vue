@@ -68,10 +68,23 @@ export default {
     ContentFooter,
     MobileMenu
   },
+   data() {
+    return {
+      user: [],
+    };
+  },
+  methods: {
+    dashboard() {
+      this.$router.push('/' + this.user.type);
+    }
+  },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
     }
+  },
+  created(){
+    this.user = this.$store.state.user;
   }
 };
 </script>

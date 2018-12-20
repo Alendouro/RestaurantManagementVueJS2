@@ -11,6 +11,7 @@ import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 import Items from "@/pages/Items.vue";
 import Login from "@/pages/Auth/Login.vue";
 import Logout from "@/pages/Auth/Logout.vue";
+import DashboardCook from "@/pages/Dashboard/DashboardCook.vue";
 
 const routes = [
   {
@@ -18,6 +19,12 @@ const routes = [
     component: DashboardLayout,
     redirect: "/items",
     children: [
+      //dashboard
+      {
+        path: "cook",
+        name: "Cook",
+        component: DashboardCook,
+      },
       {
         path: "dashboard",
         name: "Dashboard",

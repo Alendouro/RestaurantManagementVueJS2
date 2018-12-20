@@ -50,13 +50,12 @@ export default {
       newPassword: '',
       confirmPassword: '',  
       showPassword: true,
-      user: [],
     }
   },
   methods:{
     changePassword(){
         if (this.newPassword == this.confirmPassword){
-            this.axios.put("/api/user/password/"+ this.user.id, this.newPassword)
+            this.axios.put("/api/user/password/"+ this.user.id, {password: this.newPassword})
             .then(response =>{
               this.$toasted.success("Password Changed!");
             })

@@ -54,7 +54,7 @@ export default {
         })
         .then(response => {
           this.$store.commit('setUser', response.data);
-          this.$router.push('/');
+          this.$router.push('/' + response.data.type);
         });
     }
   }
