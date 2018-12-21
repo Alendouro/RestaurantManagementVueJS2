@@ -3,6 +3,7 @@
     <div class="md-layout">
       <md-button class="md-just-icon md-round md-success add-meal" @click='toggle("addMeal", null, null)'><md-icon >add</md-icon></md-button>
       <div class="md-layout-item">
+        <md-button class="md-default" @click="toggle('backToActiveMeals', null, null)" v-show="!toggles.activeMeals"><md-icon >keyboard_arrow_left</md-icon></md-button>
         <div v-if="toggles.activeMeals">
           <h3>ACTIVE MEALS</h3>
           <div class="row" v-for="meals in groupedItems(myActiveMeals, 4)" :key="meals.id">
@@ -13,6 +14,8 @@
                 </md-card-header>
                 <md-card-content>
                   <md-button class="md-info md-block" @click="toggle('chooseItemType', meal.id, meal.table_number)">ADD ITEM</md-button>
+                  <md-button class="md-info md-block" @click="toggle('viewOrdersMeal', meal.id, meal.table_number)">DETAILS</md-button>
+                  <md-button class="md-danger md-block" @click="closeMeal(meal.id)">CLOSE MEAL</md-button>
                 </md-card-content>
               </md-card>
             </div>
@@ -20,7 +23,6 @@
         </div>
 
         <div v-if="toggles.addItemToMeal">
-          <md-button class="md-default" @click="toggle('backToActiveMeals', null, null)"><md-icon >keyboard_arrow_left</md-icon></md-button>
           <h4>Adding dishes do table {{ this.mealSelected.table_number }}</h4>
           <div class="row">
             <div class="col-md-6">
@@ -65,6 +67,41 @@
           </div>
         </div>
 
+        <!-- MEAL DETAILS -->
+        <div v-if="toggles.mealOrders">
+          <h4>MEAL DETAILS</h4>
+          <h4>TABLE {{ mealSelected.table_number }} @ {{ mealSelected.total }}€</h4>
+          <div class="row">
+            <div class="col-md-12">
+              <md-card>
+                <md-card-header data-background-color="green">
+                  <h4 class="title">Orders</h4>
+                </md-card-header>
+                <md-card-content>
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Price</th>
+                      <th>Time</th>
+                      <th><md-icon>border_color</md-icon></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="order in mealSelected.orders" :key="order.id">
+                      <td class="pt-4">{{ order.item.name }}</td>
+                      <td class="pt-4">{{ order.item.price }}€</td>
+                      <td class="pt-4">{{ order.created_at }}</td>
+                      <td><md-button class="m-0">DELIVERED</md-button></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </md-card-content>
+              </md-card>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -77,6 +114,7 @@ import ItemsAPI from "../../packages/api/Items.js";
 import OrderAPI from "../../packages/api/Orders.js";
 import toastr from 'toastr';
 import _ from 'lodash';
+import swal from "sweetalert";
 
 
 export default {
@@ -92,7 +130,8 @@ export default {
         insertItemDrinks: false,
         chooseItemType: false,
         activeMeals: true,
-        addItemToMeal: false
+        addItemToMeal: false,
+        mealOrders: false
       },
       allItems: {
         drinks: [],
@@ -100,7 +139,9 @@ export default {
       },
       mealSelected: {
         id: null,
-        table_number: null
+        table_number: null,
+        orders: [],
+        total: 0
       },
     };
   },
@@ -113,6 +154,34 @@ export default {
     getMyActiveMeals(){
       MealsAPI.getMyActiveMeals().then(response => {
         this.myActiveMeals = response.data;
+
+      });
+    },
+    getItems(){
+      // No need to paginate the results here
+      ItemsAPI.getItems('/api/items')
+        .then(items => {
+          if (items){
+            items.forEach((e, i) => {
+              if (e.type === 'dish'){
+                this.allItems.dishes.push(e);
+              }
+              if (e.type === 'drink'){
+                this.allItems.drinks.push(e);
+              }
+            });
+          }
+        });
+    },
+    getMealOrders(filters, mealID){
+      MealsAPI.getOrders(filters, mealID).then((orders) => {
+        const meal = this.mealSelected;
+        meal.orders = orders.data;
+        meal.total = _.sumBy(this.mealSelected.orders, (order) => {
+          return parseFloat(order.item.price);
+        });
+
+        this.mealSelected = meal;
       });
     },
     groupedItems(items, columns){
@@ -146,13 +215,10 @@ export default {
     toggle(section, mealID, table_number){
       if(section === "addMeal"){
         this.toggles.addMeal = true;
-
         // Scroll to the bottom of the page in case there are several tables
         window.scrollTo(0,document.body.scrollHeight);
         return;
       }
-
-
 
       if(section === "insertItemDishes" || section === "insertItemDrinks"){
         if(section === "insertItemDishes"){
@@ -162,7 +228,6 @@ export default {
           this.toggles.insertItemDrinks = true;
           this.toggles.insertItemDishes = false;
         }
-
         return;
       }
 
@@ -183,23 +248,21 @@ export default {
         this.toggles.chooseItemType = false;
         this.toggles.activeMeals = true;
         this.toggles.addItemToMeal = false;
+        this.toggles.mealOrders = false;
+        return;
       }
-    },
-    getItems(){
-      // No need to paginate the results here
-      ItemsAPI.getItems('/api/items')
-        .then(items => {
-          if (items){
-            items.forEach((e, i) => {
-              if (e.type === 'dish'){
-                this.allItems.dishes.push(e);
-              }
-              if (e.type === 'drink'){
-                this.allItems.drinks.push(e);
-              }
-            });
-          }
-        });
+
+      if(section === "viewOrdersMeal"){
+        this.toggles.addItemToMeal = false;
+        this.toggles.insertItemDishes = false;
+        this.toggles.chooseItemType = false;
+        this.toggles.activeMeals = false;
+        this.mealSelected.id = mealID;
+        this.mealSelected.table_number = table_number;
+        this.toggles.addItemToMeal = false;
+        this.toggles.mealOrders = true;
+        this.getMealOrders([], mealID);
+      }
     },
     createOrder(itemID, itemName){
       // TODO ME NEEDS TO WAIT 5 SECONDS AND BE ABLE TO CANCEL ORDER
@@ -210,12 +273,57 @@ export default {
         }
       });
     },
+    closeMeal(mealID){
+      MealsAPI.postCloseMeal([], mealID).then(response => {
+        // The error will represent that this meal has an order that wasn't delivered.
+        // This will prompt the system to ask the waiter if she/he would like
+        // to close the meal anyway and the meals not be considered.
+        if(response.data.errors){
+          swal(response.data.errors.message, {
+            icon: "warning",
+            buttons: {
+              cancel: "No",
+              catch: {
+                text: "Delete dishes",
+                value: "delete"
+              },
+            },
+          }).then((value) => {
+            switch (value) {
+              case "delete":
+                MealsAPI.postCloseMeal(['eliminateNotDelivered'], mealID).then(response => {
+                  swal("Meal closed", "Your meal has been closed and all products different than 'delivered' set to 'not delivered'", "success");
+                });
+                this.removeMealFromArray(mealID);
+                break;
+            }
+          });
+
+          return;
+        }
+
+        this.removeMealFromArray(mealID);
+        swal("Meal has been closed successfully", "", "success");
+
+      });
+    },
+    removeMealFromArray(mealID){
+      var meals = this.myActiveMeals.slice();
+      _.remove(meals, (meal) => {
+        return meal.id === parseInt(mealID);
+      });
+
+      this.myActiveMeals = meals;
+    }
   },
   created(){
-    this.getFreeTables();
-    this.getMyActiveMeals();
+
     this.getItems();
+    this.getMyActiveMeals();
+    // TODO UNCOMMENT THIS LINE
+    //this.getFreeTables();
     this.user = this.$store.state.user;
+
   },
 };
 </script>

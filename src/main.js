@@ -43,7 +43,6 @@ Vue.use(Toasted);
 axios.defaults.baseURL = "http://restaurantmanagement.test";
 axios.defaults.headers.common.Authorization = "Bearer " + store.state.token;
 
-
 Vue.prototype.$Chartist = Chartist;
 
 /* eslint-disable no-new */

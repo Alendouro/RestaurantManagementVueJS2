@@ -18,7 +18,7 @@ export default{
   getActiveMeals() {
     return axios({
       method: "GET",
-      url: "/api/meals/active",
+      url: "/api/meals/active"
     }).catch(error => {
       if (error) {
         toastr.error("There was an internal error");
@@ -26,10 +26,10 @@ export default{
       }
     });
   },
-  getMyActiveMeals(){
+  getMyActiveMeals() {
     return axios({
       method: "GET",
-      url: "/api/meals/active/my",
+      url: "/api/meals/active/my"
     }).catch(error => {
       if (error) {
         toastr.error("There was an internal error");
@@ -37,7 +37,7 @@ export default{
       }
     });
   },
-  getOrders(filters, mealID){
+  getOrders(filters, mealID) {
     // If it has filter we need to construct the parameters
     let parameters = "";
     filters.forEach((e, i) => {
@@ -54,7 +54,34 @@ export default{
       method: "GET",
       url: "/api/meals/orders/" + mealID + (parameters === '' ? '' : '/' + parameters),
     }).catch(error => {
-      if (error){
+      if (error) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
+  },
+
+  postCloseMeal(filters, mealID){
+    // If it has filter we need to construct the parameters
+    let parameters = "";
+    filters.forEach((e, i) => {
+      if (i === 0) {
+        // If it is the first parameter then we need to insert '?'
+        parameters += "?" + e;
+      } else {
+        // otherwise just insert the & symbol
+        parameters += "&" + e;
+      }
+    });
+
+    return axios({
+      method: "POST",
+      url: "api/meals/close" + (parameters === "" ? "" : "" + parameters),
+      data: {
+        meal_id: mealID
+      }
+    }).catch(error => {
+      if (error) {
         toastr.error("There was an internal error");
         return false;
       }
