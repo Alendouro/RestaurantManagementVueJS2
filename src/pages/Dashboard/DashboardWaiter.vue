@@ -292,7 +292,10 @@ export default {
             switch (value) {
               case "delete":
                 MealsAPI.postCloseMeal(['eliminateNotDelivered'], mealID).then(response => {
+                  // console.log(response);
                   swal("Meal closed", "Your meal has been closed and all products different than 'delivered' set to 'not delivered'", "success");
+                }).catch(error => {
+                  console.log(error);
                 });
                 this.removeMealFromArray(mealID);
                 break;

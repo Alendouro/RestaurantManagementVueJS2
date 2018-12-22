@@ -12,6 +12,7 @@ import Login from "@/pages/Auth/Login.vue";
 import Logout from "@/pages/Auth/Logout.vue";
 import DashboardCook from "@/pages/Dashboard/DashboardCook.vue";
 import DashboardWaiter from "@/pages/Dashboard/DashboardWaiter.vue";
+import DashboardCashier from "@/pages/Dashboard/DashboardCashier.vue";
 import OrdersWaiter from "@/pages/Waiter/OrdersWaiter.vue";
 
 const routes = [
@@ -91,6 +92,12 @@ const routes = [
         path: "waiter/orders",
         name: "Waiter Orders",
         component: OrdersWaiter
+      },
+      // ---------- CASHIER ------------
+      {
+        path: "cashier/dashboard",
+        name: "Cashier Dashboard",
+        component: DashboardCashier
       }
     ]
   }
