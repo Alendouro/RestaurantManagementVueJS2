@@ -148,7 +148,7 @@ export default {
   methods: {
     getFreeTables(){
       TablesAPI.getFreeTables().then(response => {
-        this.freeTables = response;
+        this.freeTables = response.data;
       });
     },
     getMyActiveMeals(){
@@ -323,8 +323,7 @@ export default {
 
     this.getItems();
     this.getMyActiveMeals();
-    // TODO UNCOMMENT THIS LINE
-    //this.getFreeTables();
+    this.getFreeTables();
     this.user = this.$store.state.user;
 
   },

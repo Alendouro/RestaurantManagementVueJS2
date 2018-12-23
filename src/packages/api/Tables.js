@@ -7,13 +7,9 @@ export default{
     return axios({
       method: "GET",
       url: "/api/tables",
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      }
     })
       .then(response => {
-        return response.data;
+        return response;
       })
       .catch(error => {
         if (error){
@@ -26,13 +22,9 @@ export default{
     return axios({
       method: "GET",
       url: "/api/tables/free",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
     })
       .then(response => {
-        return response.data;
+        return response;
       })
       .catch(error => {
         if (error){
@@ -40,5 +32,18 @@ export default{
           return false;
         }
       });
+  },
+  deleteTable(tableID){
+    return axios({
+      method: "DELETE",
+      url: "api/tables/" + tableID
+    }).then(r => {
+      return r;
+    }).catch(err =>  {
+      if(err){
+        toastr.error("There was an error deleting table");
+        return false;
+      }
+    });
   }
 }
