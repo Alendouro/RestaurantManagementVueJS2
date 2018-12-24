@@ -23,5 +23,17 @@ export default{
         return false;
       }
     });
+  },
+  postItem(item){
+    return axios({
+      method: "POST",
+      url: "api/items/",
+      data: item
+    }).catch(err => {
+      if (err) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
   }
 };

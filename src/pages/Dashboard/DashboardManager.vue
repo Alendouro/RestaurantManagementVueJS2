@@ -6,6 +6,7 @@
           <div class="col-md-2">
             <md-button class="md-success md-block" @click="toggle('tables')">TABLES</md-button>
             <md-button class="md-success md-block" @click="toggle('menu')">MENU</md-button>
+            <md-button class="md-success md-block" @click="toggle('users')">USERS</md-button>
           </div>
           <div class="col-md-10">
             <!-- TABLES  MENU -->
@@ -38,8 +39,13 @@
             <!-- MENU MENU -->
             <div v-show="toggles.menu">
               <div class="row">
+                <div class="col-sm-12">
+                  <md-button class="md-info md-block" @click="toggle('menuAddItem')"><md-icon >add</md-icon></md-button>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-sm-6">
-                  <md-button class="md-info md-block" @click="toggle('menuDishes')">DISHES</md-button>
+                  <md-button class="md-success md-block" @click="toggle('menuDishes')">DISHES</md-button>
                 </div>
                 <div class="col-sm-6">
                   <md-button class="md-success md-block" @click="toggle('menuDrinks')">DRINKS</md-button>
@@ -49,7 +55,7 @@
                 <div class="row" v-for="dishes in groupedItems(this.items.dishes, 3)" :key="dishes.id">
                   <div class="col-md-4" v-for="dish in dishes" :key="dish.id">
                     <md-card>
-                      <md-card-header data-background-color="blue">
+                      <md-card-header data-background-color="green">
                         <h4 class="title">{{dish.name}}</h4>
                         <h6>{{ dish.price }}€</h6>
                       </md-card-header>
@@ -80,6 +86,56 @@
                 </div>
               </div>
             </div>
+
+            <!-- ADD ITEM MENU -->
+            <div v-show="toggles.menuAddItem">
+              <hr>
+              <div class="form-row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-control" v-model="items.add.name">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="type">Type</label>
+                    <select class="custom-select" id="type" v-model="items.add.type">
+                      <option value="drink">Drink</option>
+                      <option value="dish">Dish</option>
+                    </select>
+                    <div class="invalid-feedback">Example invalid custom select feedback</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label for="description">Description</label>
+                  <textarea id="description" rows="8" class="form-control" v-model="items.add.description"></textarea>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-6">
+                  <label for="price">Price</label>
+                  <input type="number" id="price" class="form-control" v-model="items.add.price"/>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="photo">Photo</label>
+                    <input type="file" class="form-control" id="photo" v-on:change="onImageChange">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <md-button class="md-success md-block" @click="postItem()">ADD ITEM</md-button>
+                </div>
+              </div>
+            </div>
+
+            <!-- USERS MENU -->
+            <div v-show="toggles.users">
+            </div>
           </div>
         </div>
 
@@ -96,9 +152,11 @@ import OrderAPI from "../../packages/api/Orders.js";
 import InvoiceAPI from "../../packages/api/Invoice.js";
 import InvoiceItemsAPI from "../../packages/api/InvoiceItems.js";
 import TablesAPI from "../../packages/api/Tables.js";
+import UsersAPI from "../../packages/api/Users.js";
 import toastr from 'toastr';
 import _ from 'lodash';
 import swal from "sweetalert";
+
 
 
 export default {
@@ -109,12 +167,21 @@ export default {
         menu: false,
         menuDishes: false,
         menuDrinks: false,
+        menuAddItem: false,
+        users: false
       },
       tables: [],
       items: {
         dishes: [],
-        drinks: []
-      }
+        drinks: [],
+        add:{
+          name: "",
+          type: "",
+          description: "",
+          price: "",
+          photo: ""
+        }
+      },
     };
   },
   methods: {
@@ -126,7 +193,6 @@ export default {
     },
     getItems(){
       ItemsAPI.getItems('api/items').then(items => {
-        console.log(items);
         items.data.forEach((e,i) => {
           if(e.type === "dish"){
             this.items.dishes.push(e);
@@ -134,10 +200,44 @@ export default {
             this.items.drinks.push(e);
           }
         });
-
-        console.log(this.items);
       });
     },
+    getUsers(){
+      UsersAPI.getUsers([]).then(r => {
+        // TODO MAKE LISTAGEM USERS
+        console.log(r);
+      });
+    },
+    // ------- POST METHODS
+    postItem(){
+      ItemsAPI.postItem(this.items.add).then(item => {
+
+        if(item.status !== 200){
+          toastr.error('There was an eror while processing your request');
+          return;
+        }
+
+        if(item.data.type === 'drink'){
+          this.items.drinks.push(item.data);
+          _.orderBy(this.items.drinks, ['name']);
+        }else if(item.data.type === 'dish'){
+          this.items.dishes.push(item.data);
+          _.orderBy(this.items.dishes, ['name']);
+        }
+
+        toastr.success(this.items.add.name + ' adicionado com sucesso');
+
+        // Clean item to add
+        this.items.add.name = "";
+        this.items.add.type = "";
+        this.items.add.description = "";
+        this.items.add.price = "";
+        this.items.add.photo = "";
+
+      })
+    },
+
+    // ----- DELETE METHODS
     deleteTable(tableID){
       TablesAPI.deleteTable(tableID).then((r) => {
         if(r.status !== 200){
@@ -209,6 +309,18 @@ export default {
         this.toggles.menuDrinks = true;
         return;
       }
+
+      if(section === "menuAddItem"){
+        this.toggles.menu = true;
+        this.toggles.menuAddItem = true;
+        return;
+      }
+
+      if(section === "users"){
+        this.toggles.users = true;
+        this.getUsers();
+        return;
+      }
     },
 
     hideAllSections(show){
@@ -225,11 +337,26 @@ export default {
 
     imageItem(itemUrl){
       return 'http://restaurantmanagement.test/storage/items/' + itemUrl;
-    }
+    },
+
+    onImageChange(e) {
+      let files = e.target.files || e.dataTransfer.files;
+      if (!files.length){
+        toastr.error('Error while uploading photo');
+        return;
+      }
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        this.items.add.photo = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
   },
 
   created(){
-    // console.log(this.toggles);
   },
 };
 </script>
