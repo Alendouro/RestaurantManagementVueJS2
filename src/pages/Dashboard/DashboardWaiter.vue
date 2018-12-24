@@ -162,7 +162,7 @@ export default {
       ItemsAPI.getItems('/api/items')
         .then(items => {
           if (items){
-            items.forEach((e, i) => {
+            items.data.forEach((e, i) => {
               if (e.type === 'dish'){
                 this.allItems.dishes.push(e);
               }

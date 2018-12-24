@@ -46,8 +46,8 @@
                 </div>
               </div>
               <div v-show="this.toggles.menuDishes">
-                <div class="row" v-for="dishes in groupedItems(this.items.dishes, 4)" :key="dishes.id">
-                  <div class="col-md-3" v-for="dish in dishes" :key="dish.id">
+                <div class="row" v-for="dishes in groupedItems(this.items.dishes, 3)" :key="dishes.id">
+                  <div class="col-md-4" v-for="dish in dishes" :key="dish.id">
                     <md-card>
                       <md-card-header data-background-color="blue">
                         <h4 class="title">{{dish.name}}</h4>
@@ -55,7 +55,8 @@
                       </md-card-header>
                       <md-card-content>
                         <img text :src="imageItem(dish.photo_url)" :alt="dish.name">
-                        <md-button class="m-0 md-danger" @click="deleteItem(dish.id)"><md-icon >delete_outline</md-icon></md-button>
+                        <br>
+                        <md-button class="m-0 md-danger" @click="deleteItem(dish.id, 'dish')"><md-icon >delete_outline</md-icon></md-button>
                       </md-card-content>
                     </md-card>
                   </div>
@@ -63,8 +64,8 @@
               </div>
 
               <div v-show="this.toggles.menuDrinks">
-                <div class="row" v-for="drinks in groupedItems(this.items.drinks, 4)" :key="drinks.id">
-                  <div class="col-md-3" v-for="drink in drinks" :key="drink.id">
+                <div class="row" v-for="drinks in groupedItems(this.items.drinks, 3)" :key="drinks.id">
+                  <div class="col-md-4" v-for="drink in drinks" :key="drink.id">
                     <md-card>
                       <md-card-header data-background-color="green">
                         <h4 class="title">{{drink.name}}</h4>
@@ -72,7 +73,7 @@
                       </md-card-header>
                       <md-card-content>
                         <img text :src="imageItem(drink.photo_url)" :alt="drink.name">
-                        <md-button class="m-0 md-danger md-block mt-1" @click="deleteItem(drink.id)"><md-icon >delete_outline</md-icon></md-button>
+                        <md-button class="m-0 md-danger md-block mt-1" @click="deleteItem(drink.id, 'drink')"><md-icon >delete_outline</md-icon></md-button>
                       </md-card-content>
                     </md-card>
                   </div>
@@ -125,7 +126,8 @@ export default {
     },
     getItems(){
       ItemsAPI.getItems('api/items').then(items => {
-        items.forEach((e,i) => {
+        console.log(items);
+        items.data.forEach((e,i) => {
           if(e.type === "dish"){
             this.items.dishes.push(e);
           }else if(e.type === 'drink'){
@@ -152,8 +154,32 @@ export default {
         toastr.success('Table deleted successfully');
       });
     },
-    deleteItem(itemID){
-      alert("EH")
+    deleteItem(itemID, itemType){
+      ItemsAPI.deleteItem(itemID).then(r => {
+        if(r.status !== 200){
+          swal('Error deleting item', r.data.error.message, 'error');
+          return;
+        }
+
+        toastr.success('Item has been deleted successfully');
+        let items;
+        if(itemType === 'dish'){
+          items = this.items.dishes.slice();
+        }else if(itemType === 'drink'){
+          items = this.items.drinks.slice();
+        }
+        console.log(items);
+        _.remove(items, item => {
+          return item.id === itemID;
+        });
+        console.log(items);
+
+        if(itemType === 'dish'){
+          this.items.dishes = items;
+        }else if(itemType === 'drink'){
+          this.items.drinks = items;
+        }
+      });
     },
 
     // ------- AUXILIARY METHODS
