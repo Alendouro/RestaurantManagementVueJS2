@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/RestaurantManagementVueJS2.iml" filepath="$PROJECT_DIR$/.idea/RestaurantManagementVueJS2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../restaurantManagement/.idea/restaurantManagement.iml" filepath="$PROJECT_DIR$/../../restaurantManagement/.idea/restaurantManagement.iml" />
     </modules>
   </component>
 </project>

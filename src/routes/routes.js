@@ -7,11 +7,15 @@ import Typography from "@/pages/Typography.vue";
 import Icons from "@/pages/Icons.vue";
 import Maps from "@/pages/Maps.vue";
 import Notifications from "@/pages/Notifications.vue";
-import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 import Items from "@/pages/Items.vue";
 import Login from "@/pages/Auth/Login.vue";
 import Logout from "@/pages/Auth/Logout.vue";
 import DashboardCook from "@/pages/Cook/DashboardCook.vue";
+import DashboardCook from "@/pages/Dashboard/DashboardCook.vue";
+import DashboardWaiter from "@/pages/Dashboard/DashboardWaiter.vue";
+import DashboardCashier from "@/pages/Dashboard/DashboardCashier.vue";
+import DashboardManager from "@/pages/Dashboard/DashboardManager.vue";
+import OrdersWaiter from "@/pages/Waiter/OrdersWaiter.vue";
 
 const routes = [
   {
@@ -19,17 +23,18 @@ const routes = [
     component: DashboardLayout,
     redirect: "/items",
     children: [
-      //dashboard
+      // --------- COOKER -----------
       {
         path: "cook",
         name: "Cook",
-        component: DashboardCook,
+        component: DashboardCook
       },
       {
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard
       },
+      // -------- UNSIGED USER --------
       {
         path: "items",
         name: "Items",
@@ -40,6 +45,7 @@ const routes = [
         name: "Login",
         component: Login
       },
+      // ------- GENERAL USER ----------
       {
         path: "logout",
         name: "Logout",
@@ -78,10 +84,28 @@ const routes = [
         name: "Notifications",
         component: Notifications
       },
+      // ---------- WAITER ------------
       {
-        path: "upgrade",
-        name: "Upgrade to PRO",
-        component: UpgradeToPRO
+        path: "waiter/dashboard",
+        name: "Waiter Dashboard",
+        component: DashboardWaiter
+      },
+      {
+        path: "waiter/orders",
+        name: "Waiter Orders",
+        component: OrdersWaiter
+      },
+      // ---------- CASHIER ------------
+      {
+        path: "cashier/dashboard",
+        name: "Cashier Dashboard",
+        component: DashboardCashier
+      },
+      // ---------- MANAGER -------------
+      {
+        path: "manager/dashboard",
+        name: "Manager Dashboard",
+        component: DashboardManager
       }
     ]
   }

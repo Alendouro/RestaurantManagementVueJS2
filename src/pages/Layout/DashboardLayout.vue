@@ -4,7 +4,7 @@
 
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link v-if="loggedIn" class="showOnLogin" to="/dashboard">
+      <sidebar-link v-if="loggedIn" class="showOnLogin"  to="/dashboard">
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
@@ -35,10 +35,6 @@
       <sidebar-link v-if="loggedIn" class="showOnLogin" to="/notifications">
         <md-icon>notifications</md-icon>
         <p>Notifications</p>
-      </sidebar-link>
-      <sidebar-link v-if="loggedIn" class="showOnLogin active-pro" to="/upgrade">
-        <md-icon>unarchive</md-icon> 
-        <p>Upgrade to PRO</p>
       </sidebar-link>
     </side-bar>
 
@@ -74,8 +70,9 @@ export default {
     };
   },
   methods: {
-    dashboard() {
-      this.$router.push('/' + this.user.type);
+
+    getTo(section){
+      this.$router.push(this.user.type + '/' + section);
     }
   },
   computed: {

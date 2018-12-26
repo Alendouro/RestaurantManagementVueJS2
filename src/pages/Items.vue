@@ -53,7 +53,7 @@ export default {
       ItemsAPI.getItems(pageUrl || '/api/items?paginate')
         .then(items => {
           // Fill the items with the data received from API
-          this.items = items.data;
+          this.items = items.data.data;
           // Fill the pages with the pages and urls necessary
           this.makePagination(items);
         })
