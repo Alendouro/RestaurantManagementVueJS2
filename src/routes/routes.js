@@ -11,7 +11,7 @@ import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 import Items from "@/pages/Items.vue";
 import Login from "@/pages/Auth/Login.vue";
 import Logout from "@/pages/Auth/Logout.vue";
-import DashboardCook from "@/pages/Dashboard/DashboardCook.vue";
+import DashboardCook from "@/pages/Cook/DashboardCook.vue";
 
 const routes = [
   {
