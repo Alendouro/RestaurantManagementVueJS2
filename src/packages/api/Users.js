@@ -1,7 +1,7 @@
 import axios from "axios";
 import toastr from "toastr";
 
-export default{
+export default {
   getUsers(filters, trashed = false){
     // If it has filter we need to construct the parameters
     let parameters = "";
@@ -30,7 +30,7 @@ export default{
         }
       });
   },
-  updateUser(user){
+  updateUser(user) {
     return axios({
       method: "PUT",
       url: "/api/users/" + user.id,
@@ -38,12 +38,36 @@ export default{
     })
       .then(r => {
         return r;
-    })
+      })
       .catch(err => {
-        if(err){
+        let statusCode = err.response.status;
+        if (statusCode === 422) {
+          toastr.error(err.response.data.error.message, "ERROR");
+          return false;
+        }
+        if (statusCode === 500) {
           toastr.error("There was an internal error");
           return false;
         }
-    });
+      });
+  },
+  deleteUser(user, forever) {
+    return axios({
+      method: "DELETE",
+      url: "/api/users/" + user.id + (forever ? "?forever" : "")
+    })
+      .then(r => {
+        return r;
+      })
+      .catch(err => {
+        let statusCode = err.response.status;
+        if (statusCode === 403) {
+          toastr.error(err.response.data.error.message, "ERROR");
+          return false;
+        }
+        if (statusCode === 500) {
+          toastr.error("There was an internal error", "ERROR");
+        }
+      });
   }
 }

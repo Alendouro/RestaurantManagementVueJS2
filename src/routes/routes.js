@@ -11,7 +11,6 @@ import Items from "@/pages/Items.vue";
 import Login from "@/pages/Auth/Login.vue";
 import Logout from "@/pages/Auth/Logout.vue";
 import DashboardCook from "@/pages/Cook/DashboardCook.vue";
-import DashboardCook from "@/pages/Dashboard/DashboardCook.vue";
 import DashboardWaiter from "@/pages/Dashboard/DashboardWaiter.vue";
 import DashboardCashier from "@/pages/Dashboard/DashboardCashier.vue";
 import DashboardManager from "@/pages/Dashboard/DashboardManager.vue";
