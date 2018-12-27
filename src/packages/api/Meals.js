@@ -1,20 +1,6 @@
 import axios from 'axios';
 import toastr from 'toastr';
 export default{
-  postNewMeal(tableID){
-    return axios({
-      method: "POST",
-      url: "/api/meals",
-      data: {
-        table_number: tableID
-      }
-    }).catch(error => {
-      if (error) {
-        toastr.error("There was an internal error");
-        return false;
-      }
-    });
-  },
   getActiveMeals() {
     return axios({
       method: "GET",
@@ -60,7 +46,40 @@ export default{
       }
     });
   },
+  getTerminated(){
+    return axios({
+      method: "GET",
+      url: "api/meals/terminated"
+    }).catch(error => {
+      if (error) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
+  },
+  getMeals(filters, paginate){
+    // If it has filter we need to construct the parameters
+    let parameters = "";
+    filters.forEach((e, i) => {
+      if (i === 0) {
+        // If it is the first parameter then we need to insert '?'
+        parameters += "?filters[]=" + e;
+      } else {
+        // otherwise just insert the & symbol
+        parameters += "&filters[]=" + e;
+      }
+    });
 
+    return axios({
+      method: "GET",
+      url: "/api/meals/" + (parameters === "" ? "" : parameters) + (paginate ? (parameters === "" ? '?paginate' : '&paginate') : "")
+    }).catch(error => {
+      if (error) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
+  },
   postCloseMeal(filters, mealID){
     // If it has filter we need to construct the parameters
     let parameters = "";
@@ -86,5 +105,20 @@ export default{
         return false;
       }
     });
-  }
+  },
+  postNewMeal(tableID){
+    return axios({
+      method: "POST",
+      url: "/api/meals",
+      data: {
+        table_number: tableID
+      }
+    }).catch(error => {
+      if (error) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
+  },
+
 }

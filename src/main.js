@@ -17,6 +17,8 @@ import GlobalComponents from "./globalComponents";
 import GlobalDirectives from "./globalDirectives";
 import Notifications from "./components/NotificationPlugin";
 import Vuelidate from 'vuelidate';
+import {ClientTable, Event} from 'vue-tables-2';
+
 
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
@@ -38,7 +40,8 @@ Vue.use(Notifications);
 Vue.use(VueAxios, axios);
 Vue.use(Toasted);
 Vue.use(Vuelidate);
-
+Vue.use(Event);
+Vue.use(ClientTable);
 /*
 * Fazer o axios assumir uma URL por padrão
 * */

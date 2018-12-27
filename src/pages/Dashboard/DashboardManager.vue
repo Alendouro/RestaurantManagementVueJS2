@@ -4,11 +4,57 @@
       <div class="md-layout-item">
         <div class="row">
           <div class="col-md-2">
+            <md-button class="md-success md-block" @click="toggle('dashboard')">DASHBOARD</md-button>
             <md-button class="md-success md-block" @click="toggle('tables')">TABLES</md-button>
             <md-button class="md-success md-block" @click="toggle('menu')">MENU</md-button>
             <md-button class="md-success md-block" @click="toggle('users')">USERS</md-button>
+            <md-button class="md-success md-block" @click="toggle('meals')">MEALS</md-button>
           </div>
           <div class="col-md-10">
+            <div v-show="toggles.meal">
+              <div id="people">
+
+              </div>
+            </div>
+
+            <!-- DASHBOARD MENU -->
+            <div v-show="toggles.dashboard">
+              <md-card>
+                <md-card-header data-background-color="green">
+                  <h4 class="title">Invoices/Meals</h4>
+                </md-card-header>
+                <md-card-content>
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Table number</th>
+                      <th>Start</th>
+                      <th>Total price</th>
+                      <th><md-icon>border_color</md-icon></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(meal, index) in meals.terminated" :key="meal.id">
+                      <td class="pt-4">{{ index }}</td>
+                      <td class="pt-4">{{ meal.table_number }}</td>
+                      <td class="pt-4">{{ meal.start }}</td>
+                      <td class="pt-4">{{ meal.total_price_preview }}€</td>
+                      <td><md-button class="m-0 md-danger"><md-icon >delete_outline</md-icon></md-button></td>
+                    </tr>
+                    <tr v-for="(invoice, index) in invoices.pending" :key="meal.id">
+                      <td class="pt-4">{{ index }}</td>
+                      <td class="pt-4">{{ invoice.table_number }}</td>
+                      <td class="pt-4">{{ invoice.start }}</td>
+                      <td class="pt-4">{{ invoice.total_price_preview }}€</td>
+                      <td><md-button class="m-0 md-danger"><md-icon >delete_outline</md-icon></md-button></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </md-card-content>
+              </md-card>
+            </div>
+
             <!-- TABLES  MENU -->
             <div v-show="toggles.tables">
               <md-card>
@@ -263,7 +309,6 @@ import _ from 'lodash';
 import swal from "sweetalert";
 
 
-
 export default {
   data() {
     return {
@@ -273,7 +318,9 @@ export default {
         menuDishes: false,
         menuDrinks: false,
         menuAddItem: false,
-        users: false
+        users: false,
+        dashboard: true,
+        meal: false
       },
       tables: [],
       items: {
@@ -306,6 +353,19 @@ export default {
           created_at: null,
           updated_at: null
         }
+      },
+      invoices: {
+        pending: []
+      },
+      vueTables: {
+        meals: {
+          columns: ['state', 'table_number', 'start', 'total_price_preview', 'created_at'],
+          rows: [],
+          option: {}
+        }
+      },
+      meals: {
+        terminated: []
       }
     };
   },
@@ -373,6 +433,22 @@ export default {
         this.users.all = r.data;
       });
     },
+    getMealsTerminated(){
+      MealsAPI.getTerminated().then(r => {
+        this.meals.terminated = r.data;
+      });
+    },
+    getPending(){
+      InvoiceAPI.getPending().then(r => {
+        this.invoices.pending = r.data;
+      });
+    },
+    getMeals(filters, paginate){
+      MealsAPI.getMeals(filters, paginate).then(meals => {
+        this.vueTables.meals.rows = meals.data.data;
+      });
+    },
+
     // ------- POST METHODS
     postItem(){
       // Make the validation before sending
@@ -457,7 +533,6 @@ export default {
 
       if(section === "menu"){
         this.toggles.menu = true;
-        // TODO REMOVE THIS
         this.getItems();
         return;
       }
@@ -483,6 +558,18 @@ export default {
       if(section === "users"){
         this.toggles.users = true;
         this.getUsers();
+        return;
+      }
+
+      if(section === "dashboard"){
+        this.toggles.dashboard = true;
+        this.getMealsTerminated();
+        return;
+      }
+
+      if(section === "meals"){
+        this.toggles.meal = true;
+        this.getMeals(['active', 'terminated'], true);
         return;
       }
     },
@@ -612,10 +699,12 @@ export default {
       });
 
     }
+
+
   },
 
   created(){
-
+    this.getMealsTerminated();
   },
 };
 </script>

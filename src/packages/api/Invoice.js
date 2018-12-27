@@ -25,6 +25,17 @@ export default{
       }
     });
   },
+  getPending(){
+    return axios({
+      method: "GET",
+      url: "api/invoice/pending"
+    }).catch(error => {
+      if (error) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
+  },
   updateInvoice(data, invoiceID){
     return axios({
       method: "PUT",
@@ -36,5 +47,6 @@ export default{
         return false;
       }
     });
-  }
+  },
+
 }
