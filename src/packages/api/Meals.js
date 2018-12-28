@@ -59,7 +59,7 @@ export default{
       }
     });
   },
-  getMeals(filters, paginate, waiter, pageNumber, waiterID) {
+  getMeals(filters, paginate, waiter, pageNumber, waiterID, date) {
     // If it has filter we need to construct the parameters
     let states = "";
     filters.forEach((e, i) => {
@@ -73,7 +73,7 @@ export default{
     });
     return axios({
       method: "GET",
-      url: "/api/meals/" + this.constructParameters(states, paginate, waiter, pageNumber, waiterID)
+      url: "/api/meals/" + this.constructParameters(states, paginate, waiter, pageNumber, waiterID, date)
     }).catch(error => {
       if (error) {
         toastr.error("There was an internal error");
@@ -122,13 +122,14 @@ export default{
     });
   },
   // ----------- AUXILIARY METHODS
-  constructParameters(states, paginate, waiter, pageNumber, waiterID) {
+  constructParameters(states, paginate, waiter, pageNumber, waiterID, date) {
     var parameters = [
       states,
       paginate,
       waiter,
       pageNumber,
-      waiterID
+      waiterID,
+      date
     ];
 
 
@@ -137,7 +138,8 @@ export default{
       (paginate ? URLFormatter.isFirstParameter(parameters) + "paginate=1" : "") +
       (waiter ? URLFormatter.isFirstParameter(parameters) + "waiter=1" : "") +
       (pageNumber === null ? "" : (URLFormatter.isFirstParameter(parameters) + "page=" + pageNumber)) +
-      (waiterID === null ? "" : URLFormatter.isFirstParameter(parameters) + "waiterID=" + waiterID);
+      (waiterID === null ? "" : URLFormatter.isFirstParameter(parameters) + "waiterID=" + waiterID) +
+      (date === null ? "" : URLFormatter.isFirstParameter(parameters) + "date=" + date);
   }
 
 

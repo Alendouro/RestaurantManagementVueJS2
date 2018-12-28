@@ -36,12 +36,18 @@
               <div class="row">
                 <div class="col-md-6">
                   <label for="filter_date">Date</label>
-                  <datepicker class="form-control" :format="dataFilter"></datepicker>
+                  <datepicker class="form-control" :format="dataFilter" id="filter_date"></datepicker>
                 </div>
               </div>
               <div class="row mb-4">
                 <div class="col-md-12">
-                  <md-button @click="getMeals(meals.filters.state.active.length === 0 ? meals.filters.state.options : meals.filters.state.active, true, true, null, meals.filters.waiter.active.id)"
+                  <md-button @click="getMeals(meals.filters.state.active.length === 0 ? meals.filters.state.options : meals.filters.state.active,
+                                    true,
+                                    true,
+                                    null,
+                                    meals.filters.waiter.active.id,
+                                    meals.filters.date.date
+                                    )"
                              class="md-round md-block md-success">FILTER</md-button>
                 </div>
               </div>
@@ -524,8 +530,8 @@ export default {
         this.meals = r.data.data;
       });
     },
-    getMeals(filters, paginate, waiter, pageNumber, userID){
-      MealsAPI.getMeals(filters, paginate, waiter, pageNumber, userID).then(meals => {
+    getMeals(filters, paginate, waiter, pageNumber, userID, date){
+      MealsAPI.getMeals(filters, paginate, waiter, pageNumber, userID, date).then(meals => {
         this.meals.data = meals.data;
       });
     },
@@ -650,7 +656,7 @@ export default {
 
       if(section === "meals"){
         this.toggles.meal = true;
-        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, null, null);
+        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, null, null, this.meals.filters.date.date);
         return;
       }
     },
@@ -783,9 +789,9 @@ export default {
 
     mealsPaginate(direction){
       if(direction === 'last'){
-        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, this.meals.data.current_page - 1, this.meals.filters.waiter.active.id);
+        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, this.meals.data.current_page - 1, this.meals.filters.waiter.active.id, this.meals.filters.date.date);
       }else{
-        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, this.meals.data.current_page + 1, this.meals.filters.waiter.active.id);
+        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, this.meals.data.current_page + 1, this.meals.filters.waiter.active.id, this.meals.filters.date.date);
       }
     },
 
