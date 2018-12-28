@@ -121,6 +121,21 @@ export default{
       }
     });
   },
+  putMealNotPaid(meal){
+    return axios({
+      method: "PUT",
+      url: "/api/meals/terminated/" + meal.id
+    })
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+        if (error) {
+          toastr.error("There was an internal error");
+          return false;
+        }
+      });
+  },
   // ----------- AUXILIARY METHODS
   constructParameters(states, paginate, waiter, pageNumber, waiterID, date) {
     var parameters = [
@@ -141,6 +156,4 @@ export default{
       (waiterID === null ? "" : URLFormatter.isFirstParameter(parameters) + "waiterID=" + waiterID) +
       (date === null ? "" : URLFormatter.isFirstParameter(parameters) + "date=" + date);
   }
-
-
 }

@@ -91,40 +91,43 @@
 
             <!-- DASHBOARD MENU -->
             <div v-show="toggles.dashboard">
-              <!--<md-card>-->
-                <!--<md-card-header data-background-color="green">-->
-                  <!--<h4 class="title">Invoices/Meals</h4>-->
-                <!--</md-card-header>-->
-                <!--<md-card-content>-->
-                  <!--<table class="table">-->
-                    <!--<thead>-->
-                    <!--<tr>-->
-                      <!--<th>#</th>-->
-                      <!--<th>Table number</th>-->
-                      <!--<th>Start</th>-->
-                      <!--<th>Total price</th>-->
-                      <!--<th><md-icon>border_color</md-icon></th>-->
-                    <!--</tr>-->
-                    <!--</thead>-->
-                    <!--<tbody>-->
-                    <!--<tr v-for="(meal, index) in meals.terminated" :key="meal.id">-->
-                      <!--<td class="pt-4">{{ index }}</td>-->
-                      <!--<td class="pt-4">{{ meal.table_number }}</td>-->
-                      <!--<td class="pt-4">{{ meal.start }}</td>-->
-                      <!--<td class="pt-4">{{ meal.total_price_preview }}€</td>-->
-                      <!--<td><md-button class="m-0 md-danger"><md-icon >delete_outline</md-icon></md-button></td>-->
-                    <!--</tr>-->
-                    <!--<tr v-for="(invoice, index) in invoices.pending" :key="meal.id">-->
-                      <!--<td class="pt-4">{{ index }}</td>-->
-                      <!--<td class="pt-4">{{ invoice.table_number }}</td>-->
-                      <!--<td class="pt-4">{{ invoice.start }}</td>-->
-                      <!--<td class="pt-4">{{ invoice.total_price_preview }}€</td>-->
-                      <!--<td><md-button class="m-0 md-danger"><md-icon >delete_outline</md-icon></md-button></td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                  <!--</table>-->
-                <!--</md-card-content>-->
-              <!--</md-card>-->
+              <md-card>
+                <md-card-header data-background-color="green">
+                  <h4 class="title">Invoices/Meals</h4>
+                </md-card-header>
+                <md-card-content>
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>Table number</th>
+                      <th>Start</th>
+                      <th>Total price</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(meal) in meals.terminated" :key="meal.id">
+                      <td class="pt-4">{{ meal.table_number }}</td>
+                      <td class="pt-4">{{ moment(meal.start).format('DD/MM/YYYY H:m') }}</td>
+                      <td class="pt-4">{{ meal.total_price_preview }}€</td>
+                      <td>
+                        <md-tooltip md-direction="top">Declare this meal as not paid</md-tooltip>
+                        <md-button class="m-0 md-danger md-block" @click="declareNotPaid(meal, 'meal')"><md-icon >money_off</md-icon></md-button>
+                      </td>
+                    </tr>
+                    <tr v-for="(invoice) in invoices.pending" :key="invoice.id">
+                      <td class="pt-4">{{ invoice.meal.table_number }}</td>
+                      <td class="pt-4">{{ moment(invoice.start).format('DD-MM-YYYY H:m') }}</td>
+                      <td class="pt-4">{{ invoice.total_price }}€</td>
+                      <td>
+                        <md-tooltip md-direction="top">Declare this invoice as not paid</md-tooltip>
+                        <md-button class="m-0 md-danger md-block" @click="declareNotPaid(invoice, 'invoice')"><md-icon >money_off</md-icon></md-button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </md-card-content>
+              </md-card>
             </div>
 
             <!-- TABLES  MENU -->
@@ -452,7 +455,8 @@ export default {
           date:{
             date: null
           }
-        }
+        },
+        terminated: []
       },
     };
   },
@@ -522,12 +526,12 @@ export default {
     },
     getMealsTerminated(){
       MealsAPI.getTerminated().then(r => {
-        // this.meals = r.data.data;
+        this.meals.terminated = r.data;
       });
     },
-    getPending(){
-      InvoiceAPI.getPending().then(r => {
-        this.meals = r.data.data;
+    getInvoicePending(withMeal){
+      InvoiceAPI.getPending(withMeal).then(r => {
+        this.invoices.pending = r.data;
       });
     },
     getMeals(filters, paginate, waiter, pageNumber, userID, date){
@@ -605,6 +609,44 @@ export default {
         }else if(itemType === 'drink'){
           this.items.drinks = items;
         }
+      });
+    },
+
+    // ------ PUT METHODS
+    putDeclareMealNotPaid(meal){
+      MealsAPI.putMealNotPaid(meal).then(r => {
+        if(r.status !== 200){
+          toastr.error('There was an error updating the meal', 'ERROR');
+          return;
+        }
+
+        const mealsTerminated = this.meals.terminated.slice();
+
+        _.remove(mealsTerminated, (currentMeal) => {
+          return currentMeal.id === meal.id;
+        });
+
+        this.meals.terminated = mealsTerminated;
+
+        toastr.success('Meal was updated successfully', 'SUCCESS');
+      });
+    },
+    putDeclareInvoiceNotPaid(invoice){
+      InvoiceAPI.putDeclareInvoiceNotPaid(invoice).then(r => {
+        if(r.status !== 200){
+          toastr.error('There was an error updating the invoice', 'ERROR');
+          return;
+        }
+
+        const invoicesPending = this.invoices.pending.slice();
+
+        _.remove(invoicesPending, (currentInvoice) => {
+          return currentInvoice.id === invoice.id;
+        });
+
+        this.invoices.pending = invoicesPending;
+
+        toastr.success('Invoice was updated successfully', 'SUCCESS');
       });
     },
 
@@ -820,11 +862,22 @@ export default {
       let dateF = moment(date).format('YYYY-MM-DD');
       this.meals.filters.date.date = dateF;
       return dateF;
+    },
+
+    declareNotPaid(item, type){
+      if(type === 'meal'){
+        this.putDeclareMealNotPaid(item);
+      }
+
+      if(type === 'invoice'){
+        this.putDeclareInvoiceNotPaid(item);
+      }
     }
   },
 
   created(){
-    // this.getMealsTerminated();
+    this.getMealsTerminated();
+    this.getInvoicePending(true);
   },
 };
 </script>

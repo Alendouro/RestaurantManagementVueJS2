@@ -25,10 +25,10 @@ export default{
       }
     });
   },
-  getPending(){
+  getPending(withMeal){
     return axios({
       method: "GET",
-      url: "api/invoice/pending"
+      url: "api/invoice/pending" + (withMeal ? "?meal=1" : "")
     }).catch(error => {
       if (error) {
         toastr.error("There was an internal error");
@@ -36,7 +36,7 @@ export default{
       }
     });
   },
-  updateInvoice(data, invoiceID){
+  updateInvoice(data, invoiceID) {
     return axios({
       method: "PUT",
       url: "api/invoice/" + invoiceID,
@@ -48,5 +48,16 @@ export default{
       }
     });
   },
+  putDeclareInvoiceNotPaid(invoice){
+    return axios({
+      method: "PUT",
+      url: "api/invoice/pending/" + invoice.id
+    }).catch(error => {
+      if (error) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
+  }
 
 }
