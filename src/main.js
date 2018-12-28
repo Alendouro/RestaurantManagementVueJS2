@@ -17,7 +17,7 @@ import GlobalComponents from "./globalComponents";
 import GlobalDirectives from "./globalDirectives";
 import Notifications from "./components/NotificationPlugin";
 import Vuelidate from 'vuelidate';
-import {ClientTable, Event} from 'vue-tables-2';
+import moment from 'moment';
 
 
 // MaterialDashboard plugin
@@ -40,8 +40,9 @@ Vue.use(Notifications);
 Vue.use(VueAxios, axios);
 Vue.use(Toasted);
 Vue.use(Vuelidate);
-Vue.use(Event);
-Vue.use(ClientTable);
+
+Vue.prototype.moment = moment;
+
 /*
 * Fazer o axios assumir uma URL por padrão
 * */

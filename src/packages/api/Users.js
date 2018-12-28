@@ -30,6 +30,22 @@ export default {
         }
       });
   },
+  getSearchUser(name){
+    // We can do some logic that concern only the API and then return promise
+    return axios({
+      method: "GET",
+      url: "/api/users/search?name=" + name
+    })
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+        if (error) {
+          toastr.error("There was an internal error");
+          return false;
+        }
+      });
+  },
   updateUser(user) {
     return axios({
       method: "PUT",
@@ -69,5 +85,5 @@ export default {
           toastr.error("There was an internal error", "ERROR");
         }
       });
-  }
+  },
 }

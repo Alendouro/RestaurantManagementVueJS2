@@ -1,5 +1,7 @@
 import axios from 'axios';
 import toastr from 'toastr';
+import URLFormatter from '../url/URLFormatter.js';
+
 export default{
   getActiveMeals() {
     return axios({
@@ -57,22 +59,21 @@ export default{
       }
     });
   },
-  getMeals(filters, paginate){
+  getMeals(filters, paginate, waiter, pageNumber, waiterID) {
     // If it has filter we need to construct the parameters
-    let parameters = "";
+    let states = "";
     filters.forEach((e, i) => {
       if (i === 0) {
         // If it is the first parameter then we need to insert '?'
-        parameters += "?filters[]=" + e;
+        states += "?state[]=" + e;
       } else {
         // otherwise just insert the & symbol
-        parameters += "&filters[]=" + e;
+        states += "&state[]=" + e;
       }
     });
-
     return axios({
       method: "GET",
-      url: "/api/meals/" + (parameters === "" ? "" : parameters) + (paginate ? (parameters === "" ? '?paginate' : '&paginate') : "")
+      url: "/api/meals/" + this.constructParameters(states, paginate, waiter, pageNumber, waiterID)
     }).catch(error => {
       if (error) {
         toastr.error("There was an internal error");
@@ -120,5 +121,24 @@ export default{
       }
     });
   },
+  // ----------- AUXILIARY METHODS
+  constructParameters(states, paginate, waiter, pageNumber, waiterID) {
+    var parameters = [
+      states,
+      paginate,
+      waiter,
+      pageNumber,
+      waiterID
+    ];
+
+
+
+    return (states === "" ? "" : states) +
+      (paginate ? URLFormatter.isFirstParameter(parameters) + "paginate=1" : "") +
+      (waiter ? URLFormatter.isFirstParameter(parameters) + "waiter=1" : "") +
+      (pageNumber === null ? "" : (URLFormatter.isFirstParameter(parameters) + "page=" + pageNumber)) +
+      (waiterID === null ? "" : URLFormatter.isFirstParameter(parameters) + "waiterID=" + waiterID);
+  }
+
 
 }

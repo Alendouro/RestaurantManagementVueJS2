@@ -12,47 +12,113 @@
           </div>
           <div class="col-md-10">
             <div v-show="toggles.meal">
-              <div id="people">
-
+              <h4><md-icon >filter_list</md-icon>Filters</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="user_state">State</label>
+                  <multiselect :multiple="true"
+                               v-model="meals.filters.state.active"
+                               :options="meals.filters.state.options"
+                               style="z-index: 9999;" id="user_state"></multiselect>
+                </div>
+                <div class="col-md-6">
+                  <label for="filter_waiter">User</label>
+                  <multiselect v-model="meals.filters.waiter.active"
+                               :options="meals.filters.waiter.options"
+                               @search-change="searchUser"
+                               :preserve-search="true"
+                               :loading="meals.filters.waiter.isLoading"
+                               label="name"
+                               track-by="name"
+                               style="z-index: 9999;" id="filter_waiter"></multiselect>
+                </div>
               </div>
-            </div>
-
-            <!-- DASHBOARD MENU -->
-            <div v-show="toggles.dashboard">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="filter_date">Date</label>
+                  <datepicker class="form-control" :format="dataFilter"></datepicker>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-md-12">
+                  <md-button @click="getMeals(meals.filters.state.active.length === 0 ? meals.filters.state.options : meals.filters.state.active, true, true, null, meals.filters.waiter.active.id)"
+                             class="md-round md-block md-success">FILTER</md-button>
+                </div>
+              </div>
               <md-card>
                 <md-card-header data-background-color="green">
-                  <h4 class="title">Invoices/Meals</h4>
+                  <h4 class="title">Meals</h4>
+                  <h5 class="title">Total: {{ meals.data.total }}</h5>
                 </md-card-header>
                 <md-card-content>
                   <table class="table">
                     <thead>
                     <tr>
-                      <th>#</th>
                       <th>Table number</th>
-                      <th>Start</th>
+                      <th>Waiter</th>
                       <th>Total price</th>
-                      <th><md-icon>border_color</md-icon></th>
+                      <th>State</th>
+                      <th>Created at</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(meal, index) in meals.terminated" :key="meal.id">
-                      <td class="pt-4">{{ index }}</td>
+                    <tr v-for="meal in meals.data.data" :key="meal.id">
                       <td class="pt-4">{{ meal.table_number }}</td>
-                      <td class="pt-4">{{ meal.start }}</td>
+                      <div v-if="meal.waiter.deleted_at !== null" class="bg-danger text-white rounded">
+                          <td class="pt-4">{{ meal.waiter.name }}</td>
+                          <md-tooltip md-direction="top">This user is soft deleted</md-tooltip>
+                      </div>
+                      <div v-else>
+                        <td class="pt-4">{{ meal.waiter.name }}</td>
+                      </div>
                       <td class="pt-4">{{ meal.total_price_preview }}€</td>
-                      <td><md-button class="m-0 md-danger"><md-icon >delete_outline</md-icon></md-button></td>
-                    </tr>
-                    <tr v-for="(invoice, index) in invoices.pending" :key="meal.id">
-                      <td class="pt-4">{{ index }}</td>
-                      <td class="pt-4">{{ invoice.table_number }}</td>
-                      <td class="pt-4">{{ invoice.start }}</td>
-                      <td class="pt-4">{{ invoice.total_price_preview }}€</td>
-                      <td><md-button class="m-0 md-danger"><md-icon >delete_outline</md-icon></md-button></td>
+                      <td class="pt-4">{{ meal.state }}</td>
+                      <td class="pt-4">{{ moment(meal.created_at).format("DD/MM/YYYY") }}</td>
                     </tr>
                     </tbody>
                   </table>
+                  <md-button :disabled="meals.data.prev_page_url === null" @click="mealsPaginate('last')">LAST</md-button>
+                  <md-button :disabled="meals.data.next_page_url === null" @click="mealsPaginate('next')">NEXT</md-button>
                 </md-card-content>
               </md-card>
+            </div>
+
+            <!-- DASHBOARD MENU -->
+            <div v-show="toggles.dashboard">
+              <!--<md-card>-->
+                <!--<md-card-header data-background-color="green">-->
+                  <!--<h4 class="title">Invoices/Meals</h4>-->
+                <!--</md-card-header>-->
+                <!--<md-card-content>-->
+                  <!--<table class="table">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                      <!--<th>#</th>-->
+                      <!--<th>Table number</th>-->
+                      <!--<th>Start</th>-->
+                      <!--<th>Total price</th>-->
+                      <!--<th><md-icon>border_color</md-icon></th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr v-for="(meal, index) in meals.terminated" :key="meal.id">-->
+                      <!--<td class="pt-4">{{ index }}</td>-->
+                      <!--<td class="pt-4">{{ meal.table_number }}</td>-->
+                      <!--<td class="pt-4">{{ meal.start }}</td>-->
+                      <!--<td class="pt-4">{{ meal.total_price_preview }}€</td>-->
+                      <!--<td><md-button class="m-0 md-danger"><md-icon >delete_outline</md-icon></md-button></td>-->
+                    <!--</tr>-->
+                    <!--<tr v-for="(invoice, index) in invoices.pending" :key="meal.id">-->
+                      <!--<td class="pt-4">{{ index }}</td>-->
+                      <!--<td class="pt-4">{{ invoice.table_number }}</td>-->
+                      <!--<td class="pt-4">{{ invoice.start }}</td>-->
+                      <!--<td class="pt-4">{{ invoice.total_price_preview }}€</td>-->
+                      <!--<td><md-button class="m-0 md-danger"><md-icon >delete_outline</md-icon></md-button></td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                  <!--</table>-->
+                <!--</md-card-content>-->
+              <!--</md-card>-->
             </div>
 
             <!-- TABLES  MENU -->
@@ -307,9 +373,13 @@ import { required, email } from 'vuelidate/lib/validators'
 import toastr from 'toastr';
 import _ from 'lodash';
 import swal from "sweetalert";
+import Multiselect from 'vue-multiselect'
+import Datepicker from 'vuejs-datepicker';
+import moment from 'moment';
 
 
 export default {
+  components: { Multiselect, Datepicker },
   data() {
     return {
       toggles:{
@@ -357,16 +427,27 @@ export default {
       invoices: {
         pending: []
       },
-      vueTables: {
-        meals: {
-          columns: ['state', 'table_number', 'start', 'total_price_preview', 'created_at'],
-          rows: [],
-          option: {}
+      meals: {
+        data: [],
+        filters: {
+          state: {
+            // If there are no active option then it will assume all the options
+            active: ['active', 'terminated'],
+            options: ['active', 'terminated', 'paid', 'not paid'],
+          },
+          waiter: {
+            active: {
+              id: null,
+              name: null
+            },
+            options: [],
+            isLoading: false
+          },
+          date:{
+            date: null
+          }
         }
       },
-      meals: {
-        terminated: []
-      }
     };
   },
   validations:{
@@ -435,17 +516,17 @@ export default {
     },
     getMealsTerminated(){
       MealsAPI.getTerminated().then(r => {
-        this.meals.terminated = r.data;
+        // this.meals = r.data.data;
       });
     },
     getPending(){
       InvoiceAPI.getPending().then(r => {
-        this.invoices.pending = r.data;
+        this.meals = r.data.data;
       });
     },
-    getMeals(filters, paginate){
-      MealsAPI.getMeals(filters, paginate).then(meals => {
-        this.vueTables.meals.rows = meals.data.data;
+    getMeals(filters, paginate, waiter, pageNumber, userID){
+      MealsAPI.getMeals(filters, paginate, waiter, pageNumber, userID).then(meals => {
+        this.meals.data = meals.data;
       });
     },
 
@@ -569,7 +650,7 @@ export default {
 
       if(section === "meals"){
         this.toggles.meal = true;
-        this.getMeals(['active', 'terminated'], true);
+        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, null, null);
         return;
       }
     },
@@ -698,17 +779,51 @@ export default {
         }
       });
 
+    },
+
+    mealsPaginate(direction){
+      if(direction === 'last'){
+        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, this.meals.data.current_page - 1, this.meals.filters.waiter.active.id);
+      }else{
+        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, this.meals.data.current_page + 1, this.meals.filters.waiter.active.id);
+      }
+    },
+
+    searchUser(searchQuery){
+      if(searchQuery.length < 3){
+        return;
+      }
+
+      var options = [];
+      this.meals.filters.waiter.isLoading = true;
+
+      UsersAPI.getSearchUser(searchQuery).then(r => {
+        this.meals.filters.waiter.isLoading = false;
+        r.data.forEach(e => {
+          options.push({
+            id: e.id,
+            name: e.name
+          });
+        });
+      });
+
+      this.meals.filters.waiter.options = options;
+    },
+
+    dataFilter(date){
+      let dateF = moment(date).format('YYYY-MM-DD');
+      this.meals.filters.date.date = dateF;
+      return dateF;
     }
-
-
   },
 
   created(){
-    this.getMealsTerminated();
+    // this.getMealsTerminated();
   },
 };
 </script>
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped> 
 

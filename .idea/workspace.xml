@@ -2,17 +2,19 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/pages/Waiter/OrdersWaiter.vue" line="17" />
-    <bookmark url="file://$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue" line="483" mnemonic="8" />
+    <bookmark url="file://$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue" line="564" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ee54274-ee68-49af-941d-be552e0a10ad" name="Default Changelist" comment="US 30 # DONE&#10;US 32 # NEXT">
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/packages/url/URLFormatter.js" />
       <change beforePath="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/MealsControllerAPI.php" afterPath="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/MealsControllerAPI.php" />
+      <change beforePath="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/UserControllerAPI.php" afterPath="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/UserControllerAPI.php" />
       <change beforePath="$PROJECT_DIR$/../../restaurantManagement/routes/api.php" afterPath="$PROJECT_DIR$/../../restaurantManagement/routes/api.php" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change beforePath="$PROJECT_DIR$/src/main.js" afterPath="$PROJECT_DIR$/src/main.js" />
-      <change beforePath="$PROJECT_DIR$/src/packages/api/Invoice.js" afterPath="$PROJECT_DIR$/src/packages/api/Invoice.js" />
       <change beforePath="$PROJECT_DIR$/src/packages/api/Meals.js" afterPath="$PROJECT_DIR$/src/packages/api/Meals.js" />
+      <change beforePath="$PROJECT_DIR$/src/packages/api/Users.js" afterPath="$PROJECT_DIR$/src/packages/api/Users.js" />
       <change beforePath="$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue" afterPath="$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,137 +46,183 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="api.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../restaurantManagement/routes/api.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="22" column="48" lean-forward="false" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="48" />
-              <folding>
-                <element signature="e#900#1054#2#PHP" expanded="true" />
-                <element signature="e#1100#1191#2#PHP" expanded="true" />
-                <element signature="e#1231#1254#2#PHP" expanded="true" />
-                <element signature="e#1297#1320#2#PHP" expanded="true" />
-                <element signature="e#1362#1458#2#PHP" expanded="true" />
-                <element signature="e#2023#2125#2#PHP" expanded="true" />
-                <element signature="e#2167#2250#2#PHP" expanded="true" />
-                <element signature="e#2478#2571#1#PHP" expanded="true" />
-                <element signature="e#2612#2724#2#PHP" expanded="true" />
-                <element signature="e#2833#2982#1#PHP" expanded="true" />
-                <element signature="e#3352#3473#2#PHP" expanded="true" />
-                <element signature="e#3399#3469#2#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MealsControllerAPI.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/MealsControllerAPI.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
-              <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
-              <folding>
-                <element signature="e#40#56#0#PHP" expanded="true" />
-                <element signature="e#2711#2759#0#PHP" expanded="true" />
-                <element signature="e#5188#5289#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DashboardManager.vue" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="447" column="52" lean-forward="false" selection-start-line="447" selection-start-column="52" selection-end-line="447" selection-end-column="52" />
-              <folding>
-                <element signature="n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#div#5;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="e#14346#14397#0" expanded="true" />
-                <element signature="e#14931#15133#0" expanded="false" />
-                <element signature="e#15166#15347#0" expanded="false" />
-                <element signature="e#15395#15813#0" expanded="false" />
-                <element signature="e#16130#16704#0" expanded="false" />
-                <element signature="e#16764#16863#0" expanded="false" />
-                <element signature="e#16879#17162#0" expanded="false" />
-                <element signature="e#17178#17274#0" expanded="false" />
-                <element signature="e#17724#18545#0" expanded="false" />
-                <element signature="e#18600#19034#0" expanded="false" />
-                <element signature="e#19068#19755#0" expanded="false" />
-                <element signature="e#20918#21105#0" expanded="false" />
-                <element signature="e#21140#21185#0" expanded="false" />
-                <element signature="e#21210#21291#0" expanded="false" />
-                <element signature="e#21315#21517#0" expanded="false" />
-                <element signature="e#21542#21708#0" expanded="false" />
-                <element signature="e#21729#21795#0" expanded="false" />
-                <element signature="e#21812#22213#0" expanded="false" />
-                <element signature="e#22236#24402#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Meals.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/packages/api/Meals.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="74" column="132" lean-forward="false" selection-start-line="74" selection-start-column="132" selection-end-line="74" selection-end-column="132" />
-              <folding>
-                <element signature="e#91#301#0" expanded="false" />
-                <element signature="e#324#537#0" expanded="false" />
-                <element signature="e#568#1200#0" expanded="false" />
-                <element signature="e#1219#1432#0" expanded="false" />
-                <element signature="e#2174#2820#0" expanded="false" />
-                <element signature="e#2844#3101#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="21" column="108" lean-forward="false" selection-start-line="21" selection-start-column="108" selection-end-line="21" selection-end-column="108" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../restaurantManagement/config/app.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="16" lean-forward="false" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="api.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../restaurantManagement/routes/api.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="595">
+                  <caret line="85" column="46" lean-forward="false" selection-start-line="85" selection-start-column="46" selection-end-line="85" selection-end-column="59" />
+                  <folding>
+                    <element signature="e#900#1054#2#PHP" expanded="true" />
+                    <element signature="e#1100#1191#2#PHP" expanded="true" />
+                    <element signature="e#1231#1254#2#PHP" expanded="true" />
+                    <element signature="e#1297#1320#2#PHP" expanded="true" />
+                    <element signature="e#1362#1458#2#PHP" expanded="true" />
+                    <element signature="e#2023#2125#2#PHP" expanded="true" />
+                    <element signature="e#2167#2250#2#PHP" expanded="true" />
+                    <element signature="e#2478#2571#1#PHP" expanded="true" />
+                    <element signature="e#2612#2724#2#PHP" expanded="true" />
+                    <element signature="e#2833#2982#1#PHP" expanded="true" />
+                    <element signature="e#3479#3600#2#PHP" expanded="true" />
+                    <element signature="e#3526#3596#2#PHP" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="MealsControllerAPI.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/MealsControllerAPI.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="323">
+                  <caret line="29" column="63" lean-forward="false" selection-start-line="29" selection-start-column="63" selection-end-line="29" selection-end-column="63" />
+                  <folding>
+                    <element signature="e#1138#1215#2#PHP" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="DashboardManager.vue" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="504">
+                  <caret line="812" column="21" lean-forward="false" selection-start-line="812" selection-start-column="21" selection-end-line="812" selection-end-column="21" />
+                  <folding>
+                    <element signature="n#style#0;n#multiselect#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#multiselect#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                    <element signature="n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="n#div#5;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="e#18166#18217#0" expanded="true" />
+                    <element signature="e#18908#19110#0" expanded="false" />
+                    <element signature="e#19143#19324#0" expanded="false" />
+                    <element signature="e#19372#19790#0" expanded="false" />
+                    <element signature="e#20395#20969#0" expanded="false" />
+                    <element signature="e#21029#21128#0" expanded="false" />
+                    <element signature="e#21144#21427#0" expanded="false" />
+                    <element signature="e#21443#21539#0" expanded="false" />
+                    <element signature="e#21680#21773#0" expanded="false" />
+                    <element signature="e#22021#22842#0" expanded="false" />
+                    <element signature="e#22897#23331#0" expanded="false" />
+                    <element signature="e#23365#24052#0" expanded="false" />
+                    <element signature="e#24107#25294#0" expanded="false" />
+                    <element signature="e#25322#25509#0" expanded="false" />
+                    <element signature="e#25544#25589#0" expanded="false" />
+                    <element signature="e#25614#25695#0" expanded="false" />
+                    <element signature="e#25719#25921#0" expanded="false" />
+                    <element signature="e#25946#26112#0" expanded="false" />
+                    <element signature="e#26133#26199#0" expanded="false" />
+                    <element signature="e#26216#26617#0" expanded="false" />
+                    <element signature="e#26640#28806#0" expanded="false" />
+                    <element signature="e#28837#29339#0" expanded="false" />
+                    <element signature="e#29369#29807#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Meals.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/packages/api/Meals.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="674">
+                  <caret line="136" column="30" lean-forward="false" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="30" />
+                  <folding>
+                    <element signature="e#143#353#0" expanded="false" />
+                    <element signature="e#376#589#0" expanded="false" />
+                    <element signature="e#1271#1484#0" expanded="false" />
+                    <element signature="e#2207#2853#0" expanded="false" />
+                    <element signature="e#2877#3134#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/User.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="289">
+                  <caret line="21" column="108" lean-forward="false" selection-start-line="21" selection-start-column="108" selection-end-line="21" selection-end-column="108" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="187">
+                  <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="21" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="app.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../restaurantManagement/config/app.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="221">
+                  <caret line="13" column="16" lean-forward="false" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="16" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="DashboardManager.vue" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="182">
+                  <caret line="67" column="45" lean-forward="false" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="45" />
+                  <folding>
+                    <element signature="n#style#0;n#multiselect#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#multiselect#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                    <element signature="n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="n#div#5;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+                    <element signature="e#18166#18217#0" expanded="true" />
+                    <element signature="e#18908#19110#0" expanded="false" />
+                    <element signature="e#19143#19324#0" expanded="false" />
+                    <element signature="e#19372#19790#0" expanded="false" />
+                    <element signature="e#20395#20969#0" expanded="false" />
+                    <element signature="e#21029#21128#0" expanded="false" />
+                    <element signature="e#21144#21427#0" expanded="false" />
+                    <element signature="e#21443#21539#0" expanded="false" />
+                    <element signature="e#21680#21773#0" expanded="false" />
+                    <element signature="e#22021#22842#0" expanded="false" />
+                    <element signature="e#22897#23331#0" expanded="false" />
+                    <element signature="e#23365#24052#0" expanded="false" />
+                    <element signature="e#25322#25509#0" expanded="false" />
+                    <element signature="e#25544#25589#0" expanded="false" />
+                    <element signature="e#25614#25695#0" expanded="false" />
+                    <element signature="e#25719#25921#0" expanded="false" />
+                    <element signature="e#25946#26112#0" expanded="false" />
+                    <element signature="e#26133#26199#0" expanded="false" />
+                    <element signature="e#26216#26617#0" expanded="false" />
+                    <element signature="e#26640#28806#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>push</find>
-      <find>group</find>
-      <find>ItemsAPI.getItems('api/items').</find>
-      <find>.remove</find>
-      <find>age</find>
-      <find>score</find>
-      <find>icon</find>
-      <find>menuAddItem</find>
-      <find>info</find>
-      <find>blue</find>
       <find>initial</find>
       <find>orderBy</find>
       <find>.status</find>
       <find>.state</find>
       <find>Auth</find>
       <find>auth</find>
-      <find>console.log</find>
       <find>dish</find>
       <find>:</find>
       <find>edit</find>
@@ -185,9 +233,20 @@
       <find>manager</find>
       <find>menu</find>
       <find>toggle(</find>
-      <find>getMeals</find>
-      <find>activeMeals</find>
       <find>meals.ter</find>
+      <find>activeMeals</find>
+      <find>with</find>
+      <find>.name</find>
+      <find>terminated</find>
+      <find>getMealsTerminated</find>
+      <find>state</find>
+      <find>id:</find>
+      <find>isLoading</find>
+      <find>getMeals</find>
+      <find>console.log</find>
+      <find>consl</find>
+      <find>date</find>
+      <find>moment</find>
     </findStrings>
     <replaceStrings>
       <replace>username</replace>
@@ -232,14 +291,16 @@
         <option value="$PROJECT_DIR$/src/routes/routes.js" />
         <option value="$PROJECT_DIR$/src/packages/api/Orders.js" />
         <option value="$PROJECT_DIR$/../../restaurantManagement/app/User.php" />
-        <option value="$PROJECT_DIR$/src/packages/api/Users.js" />
-        <option value="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/UserControllerAPI.php" />
         <option value="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/InvoiceControllerAPI.php" />
         <option value="$PROJECT_DIR$/src/packages/api/Invoice.js" />
-        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/src/packages/URL/URLFormatter.js" />
         <option value="$PROJECT_DIR$/../../restaurantManagement/routes/api.php" />
-        <option value="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/MealsControllerAPI.php" />
+        <option value="$PROJECT_DIR$/src/packages/api/Users.js" />
+        <option value="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/UserControllerAPI.php" />
         <option value="$PROJECT_DIR$/src/packages/api/Meals.js" />
+        <option value="$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/MealsControllerAPI.php" />
+        <option value="$PROJECT_DIR$/src/packages/url/URLFormatter.js" />
+        <option value="$PROJECT_DIR$/src/main.js" />
         <option value="$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue" />
       </list>
     </option>
@@ -344,23 +405,36 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="RestaurantManagementVueJS2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="restaurantManagement" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="RestaurantManagementVueJS2" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="RestaurantManagementVueJS2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="restaurantManagement" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="RestaurantManagementVueJS2" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="RestaurantManagementVueJS2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RestaurantManagementVueJS2" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="packages" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="RestaurantManagementVueJS2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RestaurantManagementVueJS2" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="packages" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="api" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -378,6 +452,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\webProjects\vuejs\RestaurantManagementVueJS2\src\packages\url" />
+      <recent name="G:\webProjects\vuejs\RestaurantManagementVueJS2\src\packages\URL" />
       <recent name="G:\webProjects\vuejs\RestaurantManagementVueJS2\src\packages\api" />
       <recent name="G:\webProjects\vuejs\RestaurantManagementVueJS2\src\pages\Dashboard" />
       <recent name="G:\webProjects\vuejs\RestaurantManagementVueJS2\src\pages\Waiter" />
@@ -423,7 +499,9 @@
       <workItem from="1545773825743" duration="8357000" />
       <workItem from="1545866614716" duration="17000" />
       <workItem from="1545910248731" duration="6498000" />
-      <workItem from="1545922360085" duration="3399000" />
+      <workItem from="1545922360085" duration="4826000" />
+      <workItem from="1545927408934" duration="661000" />
+      <workItem from="1546001703120" duration="14322000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit pro Zuca">
       <created>1544119257823</created>
@@ -488,27 +566,35 @@
       <option name="project" value="LOCAL" />
       <updated>1545915001265</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="US 30 # DONE&#10;US 32 # NEXT">
+      <created>1545925820098</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1545925820099</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92540000" />
+    <option name="totallyTimeSpent" value="108950000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -539,32 +625,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/pages/Layout/DashboardLayout.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Exceptions/Handler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="10" column="59" lean-forward="true" selection-start-line="10" selection-start-column="59" selection-end-line="10" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../restaurantManagement/config/database.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="629">
@@ -664,13 +729,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/OrderController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1258">
-          <caret line="173" column="36" lean-forward="false" selection-start-line="173" selection-start-column="36" selection-end-line="173" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/InvoiceItemsControllerAPI.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1241">
@@ -704,13 +762,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/Dashboard/DashboardCook.vue" />
-    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Meal.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="5" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Kernel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="759">
@@ -837,34 +888,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/UserControllerAPI.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="140" column="54" lean-forward="false" selection-start-line="140" selection-start-column="54" selection-end-line="140" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/packages/api/Users.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="47" column="33" lean-forward="true" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
-          <folding>
-            <element signature="e#110#944#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="43" column="20" lean-forward="false" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
-          <folding>
-            <element signature="e#427#477#0" expanded="false" />
-            <element signature="e#704#757#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/packages/api/Invoice.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -880,16 +903,65 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="149" column="35" lean-forward="false" selection-start-line="149" selection-start-column="35" selection-end-line="149" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Resources/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="31" lean-forward="false" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Resources/Meal.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/OrderController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="38" column="18" lean-forward="false" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Meal.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="33" lean-forward="false" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/packages/api/Users.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="36" column="43" lean-forward="false" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="43" />
           <folding>
-            <element signature="e#3537#3638#0#PHP" expanded="false" />
+            <element signature="e#0#26#0" expanded="false" />
+            <element signature="e#110#944#0" expanded="false" />
+            <element signature="e#1366#1852#0" expanded="false" />
+            <element signature="e#1882#2368#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/UserControllerAPI.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="183" column="36" lean-forward="false" selection-start-line="183" selection-start-column="28" selection-end-line="183" selection-end-column="36" />
+          <folding>
+            <element signature="e#40#68#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../restaurantManagement/routes/api.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="22" column="48" lean-forward="false" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="48" />
+        <state relative-caret-position="595">
+          <caret line="85" column="46" lean-forward="false" selection-start-line="85" selection-start-column="46" selection-end-line="85" selection-end-column="59" />
           <folding>
             <element signature="e#900#1054#2#PHP" expanded="true" />
             <element signature="e#1100#1191#2#PHP" expanded="true" />
@@ -901,21 +973,27 @@
             <element signature="e#2478#2571#1#PHP" expanded="true" />
             <element signature="e#2612#2724#2#PHP" expanded="true" />
             <element signature="e#2833#2982#1#PHP" expanded="true" />
-            <element signature="e#3352#3473#2#PHP" expanded="true" />
-            <element signature="e#3399#3469#2#PHP" expanded="true" />
+            <element signature="e#3479#3600#2#PHP" expanded="true" />
+            <element signature="e#3526#3596#2#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../restaurantManagement/app/Http/Controllers/MealsControllerAPI.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+        <state relative-caret-position="323">
+          <caret line="29" column="63" lean-forward="false" selection-start-line="29" selection-start-column="63" selection-end-line="29" selection-end-column="63" />
           <folding>
-            <element signature="e#40#56#0#PHP" expanded="true" />
-            <element signature="e#2711#2759#0#PHP" expanded="true" />
-            <element signature="e#5188#5289#0#PHP" expanded="true" />
+            <element signature="e#1138#1215#2#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/packages/url/URLFormatter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -929,48 +1007,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/packages/api/Meals.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="74" column="132" lean-forward="false" selection-start-line="74" selection-start-column="132" selection-end-line="74" selection-end-column="132" />
+        <state relative-caret-position="674">
+          <caret line="136" column="30" lean-forward="false" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="30" />
           <folding>
-            <element signature="e#91#301#0" expanded="false" />
-            <element signature="e#324#537#0" expanded="false" />
-            <element signature="e#568#1200#0" expanded="false" />
-            <element signature="e#1219#1432#0" expanded="false" />
-            <element signature="e#2174#2820#0" expanded="false" />
-            <element signature="e#2844#3101#0" expanded="false" />
+            <element signature="e#143#353#0" expanded="false" />
+            <element signature="e#376#589#0" expanded="false" />
+            <element signature="e#1271#1484#0" expanded="false" />
+            <element signature="e#2207#2853#0" expanded="false" />
+            <element signature="e#2877#3134#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/Dashboard/DashboardManager.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="447" column="52" lean-forward="false" selection-start-line="447" selection-start-column="52" selection-end-line="447" selection-end-column="52" />
+        <state relative-caret-position="182">
+          <caret line="67" column="45" lean-forward="false" selection-start-line="67" selection-start-column="43" selection-end-line="67" selection-end-column="45" />
           <folding>
-            <element signature="n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#multiselect#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#multiselect#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#div#5;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#14346#14397#0" expanded="true" />
-            <element signature="e#14931#15133#0" expanded="false" />
-            <element signature="e#15166#15347#0" expanded="false" />
-            <element signature="e#15395#15813#0" expanded="false" />
-            <element signature="e#16130#16704#0" expanded="false" />
-            <element signature="e#16764#16863#0" expanded="false" />
-            <element signature="e#16879#17162#0" expanded="false" />
-            <element signature="e#17178#17274#0" expanded="false" />
-            <element signature="e#17724#18545#0" expanded="false" />
-            <element signature="e#18600#19034#0" expanded="false" />
-            <element signature="e#19068#19755#0" expanded="false" />
-            <element signature="e#20918#21105#0" expanded="false" />
-            <element signature="e#21140#21185#0" expanded="false" />
-            <element signature="e#21210#21291#0" expanded="false" />
-            <element signature="e#21315#21517#0" expanded="false" />
-            <element signature="e#21542#21708#0" expanded="false" />
-            <element signature="e#21729#21795#0" expanded="false" />
-            <element signature="e#21812#22213#0" expanded="false" />
-            <element signature="e#22236#24402#0" expanded="false" />
+            <element signature="e#18166#18217#0" expanded="true" />
+            <element signature="e#18908#19110#0" expanded="false" />
+            <element signature="e#19143#19324#0" expanded="false" />
+            <element signature="e#19372#19790#0" expanded="false" />
+            <element signature="e#20395#20969#0" expanded="false" />
+            <element signature="e#21029#21128#0" expanded="false" />
+            <element signature="e#21144#21427#0" expanded="false" />
+            <element signature="e#21443#21539#0" expanded="false" />
+            <element signature="e#21680#21773#0" expanded="false" />
+            <element signature="e#22021#22842#0" expanded="false" />
+            <element signature="e#22897#23331#0" expanded="false" />
+            <element signature="e#23365#24052#0" expanded="false" />
+            <element signature="e#25322#25509#0" expanded="false" />
+            <element signature="e#25544#25589#0" expanded="false" />
+            <element signature="e#25614#25695#0" expanded="false" />
+            <element signature="e#25719#25921#0" expanded="false" />
+            <element signature="e#25946#26112#0" expanded="false" />
+            <element signature="e#26133#26199#0" expanded="false" />
+            <element signature="e#26216#26617#0" expanded="false" />
+            <element signature="e#26640#28806#0" expanded="false" />
           </folding>
         </state>
       </provider>
