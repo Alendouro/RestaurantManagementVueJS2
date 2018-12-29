@@ -9,6 +9,7 @@
             <md-button class="md-success md-block" @click="toggle('menu')">MENU</md-button>
             <md-button class="md-success md-block" @click="toggle('users')">USERS</md-button>
             <md-button class="md-success md-block" @click="toggle('meals')">MEALS</md-button>
+            <md-button class="md-success md-block" @click="toggle('invoices')">INVOICES</md-button>
           </div>
           <div class="col-md-10">
             <div v-show="toggles.meal">
@@ -25,7 +26,7 @@
                   <label for="filter_waiter">User</label>
                   <multiselect v-model="meals.filters.waiter.active"
                                :options="meals.filters.waiter.options"
-                               @search-change="searchUser"
+                               @search-change="searchUsersMeals"
                                :preserve-search="true"
                                :loading="meals.filters.waiter.isLoading"
                                label="name"
@@ -46,8 +47,7 @@
                                     true,
                                     null,
                                     meals.filters.waiter.active.id,
-                                    meals.filters.date.date
-                                    )"
+                                    meals.filters.date.date)"
                              class="md-round md-block md-success">FILTER</md-button>
                 </div>
               </div>
@@ -400,6 +400,78 @@
                 </div>
               </div>
             </div>
+
+            <!-- INVOICES MENU -->
+            <div v-show="toggles.invoices">
+              <h4><md-icon >filter_list</md-icon>Filters</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="invoice_state">State</label>
+                  <multiselect :multiple="true"
+                               v-model="invoices.filters.state.active"
+                               :options="invoices.filters.state.options"
+                               style="z-index: 9999;" id="invoice_state"></multiselect>
+                </div>
+                <div class="col-md-6">
+                  <label for="invoice_waiter">User</label>
+                  <multiselect v-model="invoices.filters.waiter.active"
+                               :options="invoices.filters.waiter.options"
+                               @search-change="searchUsersInvoices"
+                               :preserve-search="true"
+                               :loading="invoices.filters.waiter.isLoading"
+                               label="name"
+                               track-by="name"
+                               style="z-index: 9999;" id="invoice_waiter"></multiselect>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="invoice_date">Date</label>
+                  <datepicker class="form-control" :format="dataFilter" id="invoice_date"></datepicker>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-md-12">
+                  <md-button @click="getInvoices(invoices.filters.state.active.length === 0 ? invoices.filters.state.options : invoices.filters.state.active, true, true, true, 1, invoices.filters.date.date)"
+                             class="md-round md-block md-success">FILTER</md-button>
+                </div>
+              </div>
+              <md-card v-if="this.invoices.data !== null">
+                <md-card-header data-background-color="green">
+                  <h4 class="title">Invoices</h4>
+                  <h5 class="title">Total: {{ invoices.data.total }}</h5>
+                </md-card-header>
+                <md-card-content>
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>State</th>
+                      <th>NIF</th>
+                      <th>Name</th>
+                      <th>Date</th>
+                      <th>Total</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="invoice in invoices.data.data" :key="invoice.id">
+                      <td class="pt-4">{{ invoice.state }}</td>
+                      <td class="pt-4">{{ invoice.nif }}</td>
+                      <td class="pt-4">{{ invoice.name }}</td>
+                      <td class="pt-4">{{ invoice.date }}</td>
+                      <td class="pt-4">{{ invoice.total_price }}€</td>
+                      <td class="p-0">
+                        <md-tooltip md-direction="top">View invoice details</md-tooltip>
+                        <md-button><md-icon>remove_red_eye</md-icon></md-button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <md-button :disabled="invoices.data.prev_page_url === null" @click="invoicesPaginate('last')">LAST</md-button>
+                  <md-button :disabled="invoices.data.next_page_url === null" @click="invoicesPaginate('next')">NEXT</md-button>
+                </md-card-content>
+              </md-card>
+            </div>
           </div>
         </div>
       </div>
@@ -437,7 +509,8 @@ export default {
         users: false,
         dashboard: true,
         meal: false,
-        mealDetails: false
+        mealDetails: false,
+        invoices: false,
       },
       tables: [],
       items: {
@@ -472,7 +545,25 @@ export default {
         }
       },
       invoices: {
-        pending: []
+        pending: [],
+        data: null,
+        filters:{
+          state:{
+            active: ['pending'],
+            options: ['paid', 'not paid', 'pending']
+          },
+          waiter:{
+            active: {
+              id: null,
+              name: null
+            },
+            options: [],
+            isLoading: false
+          },
+          date:{
+            date: null
+          }
+        }
       },
       meals: {
         data: [],
@@ -574,6 +665,11 @@ export default {
     getInvoicePending(withMeal){
       InvoiceAPI.getPending(withMeal).then(r => {
         this.invoices.pending = r.data;
+      });
+    },
+    getInvoices(filters, paginate, meal, waiter, page, date){
+      InvoiceAPI.getInvoices(filters, paginate, meal, waiter, page, date).then(r => {
+        this.invoices.data = r.data;
       });
     },
     getMeals(filters, paginate, waiter, pageNumber, userID, date){
@@ -740,7 +836,20 @@ export default {
 
       if(section === "meals"){
         this.toggles.meal = true;
-        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active, true, true, null, null, this.meals.filters.date.date);
+        this.getMeals(this.meals.filters.state.active.length === 0 ? this.meals.filters.state.options : this.meals.filters.state.active,
+          true, true, null, null, this.meals.filters.date.date);
+        return;
+      }
+
+      if(section === "invoices"){
+        this.toggles.invoices = true;
+        this.getInvoices(this.invoices.filters.state.active.length === 0 ? this.invoices.filters.state.options : this.invoices.filters.state.active,
+          true,
+          true,
+          true,
+          1,
+          null
+        );
         return;
       }
     },
@@ -879,7 +988,7 @@ export default {
       }
     },
 
-    searchUser(searchQuery){
+    searchUsersMeals(searchQuery){
       if(searchQuery.length < 3){
         return;
       }
@@ -900,9 +1009,31 @@ export default {
       this.meals.filters.waiter.options = options;
     },
 
+    searchUsersInvoices(searchQuery){
+      if(searchQuery.length < 3){
+        return;
+      }
+
+      var options = [];
+      this.invoices.filters.waiter.isLoading = true;
+
+      UsersAPI.getSearchUser(searchQuery).then(r => {
+        this.invoices.filters.waiter.isLoading = false;
+        r.data.forEach(e => {
+          options.push({
+            id: e.id,
+            name: e.name
+          });
+        });
+      });
+
+      this.invoices.filters.waiter.options = options;
+    },
+
     dataFilter(date){
       let dateF = moment(date).format('YYYY-MM-DD');
       this.meals.filters.date.date = dateF;
+      this.invoices.filters.date.date = dateF;
       return dateF;
     },
 
@@ -923,6 +1054,16 @@ export default {
 
         location.hash = "#mealDetails";
       });
+    },
+
+    invoicesPaginate(direction){
+      if(direction === 'last'){
+        this.getInvoices(this.invoices.filters.state.active.length === 0 ? this.invoices.filters.state.options : this.invoices.filters.state.active,
+          true, true, true, this.invoices.data.current_page - 1, this.invoices.filters.date.date);
+      }else{
+        this.getInvoices(this.invoices.filters.state.active.length === 0 ? this.invoices.filters.state.options : this.invoices.filters.state.active,
+          true, true, true, this.invoices.data.current_page + 1, this.invoices.filters.date.date);
+      }
     }
   },
 

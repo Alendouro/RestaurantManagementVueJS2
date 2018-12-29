@@ -138,7 +138,7 @@ export default{
   },
   // ----------- AUXILIARY METHODS
   constructParameters(states, paginate, waiter, pageNumber, waiterID, date) {
-    var parameters = [
+    let parameters = [
       states,
       paginate,
       waiter,
