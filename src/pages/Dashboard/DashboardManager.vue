@@ -65,6 +65,7 @@
                       <th>Total price</th>
                       <th>State</th>
                       <th>Created at</th>
+                      <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -80,6 +81,10 @@
                       <td class="pt-4">{{ meal.total_price_preview }}€</td>
                       <td class="pt-4">{{ meal.state }}</td>
                       <td class="pt-4">{{ moment(meal.created_at).format("DD/MM/YYYY") }}</td>
+                      <td class="p-0">
+                        <md-tooltip md-direction="top">View meal details</md-tooltip>
+                        <md-button @click="getMealDetails(meal)"><md-icon>remove_red_eye</md-icon></md-button>
+                      </td>
                     </tr>
                     </tbody>
                   </table>
@@ -87,6 +92,40 @@
                   <md-button :disabled="meals.data.next_page_url === null" @click="mealsPaginate('next')">NEXT</md-button>
                 </md-card-content>
               </md-card>
+
+              <!-- MEAL DETAILS -->
+              <div v-if="meals.selected.meal !== null">
+                <md-card>
+                  <md-card-header data-background-color="green" id="mealDetails">
+                    <h4 class="title">Meal</h4>
+                    <h6 class="title">Total: {{ meals.selected.meal.total_price_preview }}€</h6>
+                    <h6 class="title">State: {{ meals.selected.meal.state }}</h6>
+                    <h6 class="title">Date: {{ moment(meals.selected.meal.created_at).format("DD/MM/YYYY") }}</h6>
+                    <h6 class="title">Waiter: {{ meals.selected.meal.waiter.name }}</h6>
+                  </md-card-header>
+                  <md-card-content>
+                    <table class="table">
+                      <thead>
+                      <tr>
+                        <th>Item</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>State</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="item in meals.selected.items" :key="item.id">
+                        <td class="pt-4">{{ item.item.name }}</td>
+                        <td class="pt-4">{{ item.item.type }}</td>
+                        <td class="pt-4">{{ item.item.price }}€</td>
+                        <td class="pt-4">{{ item.state }}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </md-card-content>
+                </md-card>
+
+              </div>
             </div>
 
             <!-- DASHBOARD MENU -->
@@ -363,8 +402,6 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   </div>
@@ -399,7 +436,8 @@ export default {
         menuAddItem: false,
         users: false,
         dashboard: true,
-        meal: false
+        meal: false,
+        mealDetails: false
       },
       tables: [],
       items: {
@@ -456,7 +494,11 @@ export default {
             date: null
           }
         },
-        terminated: []
+        terminated: [],
+        selected: {
+          meal: null,
+          items: []
+        }
       },
     };
   },
@@ -872,6 +914,15 @@ export default {
       if(type === 'invoice'){
         this.putDeclareInvoiceNotPaid(item);
       }
+    },
+
+    getMealDetails(meal){
+      this.meals.selected.meal = meal;
+      MealsAPI.getOrders([], meal.id).then(orders => {
+        this.meals.selected.items = orders.data;
+
+        location.hash = "#mealDetails";
+      });
     }
   },
 
