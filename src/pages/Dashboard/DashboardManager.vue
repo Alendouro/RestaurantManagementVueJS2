@@ -432,7 +432,7 @@
               </div>
               <div class="row mb-4">
                 <div class="col-md-12">
-                  <md-button @click="getInvoices(invoices.filters.state.active.length === 0 ? invoices.filters.state.options : invoices.filters.state.active, true, true, true, 1, invoices.filters.date.date)"
+                  <md-button @click="getInvoices(invoices.filters.state.active.length === 0 ? invoices.filters.state.options : invoices.filters.state.active, true, true, true, 1, invoices.filters.date.date, invoices.filters.waiter.active.id)"
                              class="md-round md-block md-success">FILTER</md-button>
                 </div>
               </div>
@@ -458,17 +458,51 @@
                       <td class="pt-4">{{ invoice.state }}</td>
                       <td class="pt-4">{{ invoice.nif }}</td>
                       <td class="pt-4">{{ invoice.name }}</td>
-                      <td class="pt-4">{{ invoice.date }}</td>
+                      <td class="pt-4">{{ moment(invoice.date).format('DD/MM/YYYY') }}</td>
                       <td class="pt-4">{{ invoice.total_price }}€</td>
                       <td class="p-0">
                         <md-tooltip md-direction="top">View invoice details</md-tooltip>
-                        <md-button><md-icon>remove_red_eye</md-icon></md-button>
+                        <md-button class="md-block" @click="getInvoiceItems(invoice)"><md-icon>remove_red_eye</md-icon></md-button>
                       </td>
                     </tr>
                     </tbody>
                   </table>
                   <md-button :disabled="invoices.data.prev_page_url === null" @click="invoicesPaginate('last')">LAST</md-button>
                   <md-button :disabled="invoices.data.next_page_url === null" @click="invoicesPaginate('next')">NEXT</md-button>
+                </md-card-content>
+              </md-card>
+              <md-card v-if="invoices.selected.invoice !== null" id="printInvoice">
+                <md-card-header data-background-color="green" id="mealDetails">
+                  <h4 class="title">Meal</h4>
+                  <h6 class="title">Total: {{ invoices.selected.invoice.total_price }}€</h6>
+                  <h6 class="title">State: {{ invoices.selected.invoice.state }}</h6>
+                  <h6 class="title">Date: {{ moment(invoices.selected.invoice.created_at).format("DD/MM/YYYY") }}</h6>
+                  <h6 class="title">Waiter: {{ invoices.selected.invoice.meal.waiter.name }}</h6>
+                </md-card-header>
+                <md-card-content>
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Item</th>
+                      <th>Type</th>
+                      <th>Quantity</th>
+                      <th>Unit price</th>
+                      <th>Sub total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item, index) in invoices.selected.items" :key="item.id">
+                      <td class="pt-4">{{ index + 1 }}</td>
+                      <td class="pt-4">{{ item.item.name }}</td>
+                      <td class="pt-4">{{ item.item.type }}</td>
+                      <td class="pt-4">{{ item.quantity }}</td>
+                      <td class="pt-4">{{ item.unit_price }}€</td>
+                      <td class="pt-4">{{ item.sub_total_price }}€</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <md-button v-print="'#printInvoice'">PRINT INVOICE</md-button>
                 </md-card-content>
               </md-card>
             </div>
@@ -563,6 +597,10 @@ export default {
           date:{
             date: null
           }
+        },
+        selected: {
+          invoice: null,
+          items: null
         }
       },
       meals: {
@@ -667,14 +705,24 @@ export default {
         this.invoices.pending = r.data;
       });
     },
-    getInvoices(filters, paginate, meal, waiter, page, date){
-      InvoiceAPI.getInvoices(filters, paginate, meal, waiter, page, date).then(r => {
+    getInvoices(filters, paginate, meal, waiter, page, date, waiterID){
+      InvoiceAPI.getInvoices(filters, paginate, meal, waiter, page, date, waiterID).then(r => {
         this.invoices.data = r.data;
       });
     },
     getMeals(filters, paginate, waiter, pageNumber, userID, date){
       MealsAPI.getMeals(filters, paginate, waiter, pageNumber, userID, date).then(meals => {
         this.meals.data = meals.data;
+      });
+    },
+    getInvoiceItems(invoice){
+      this.invoices.selected.invoice = invoice;
+
+      // Scroll to the bottom of the page
+      window.scrollTo(0,document.body.scrollHeight);
+
+      InvoiceItemsAPI.getInvoiceItems(invoice.id).then(items => {
+          this.invoices.selected.items = items.data;
       });
     },
 
@@ -848,6 +896,7 @@ export default {
           true,
           true,
           1,
+          null,
           null
         );
         return;
@@ -1059,12 +1108,12 @@ export default {
     invoicesPaginate(direction){
       if(direction === 'last'){
         this.getInvoices(this.invoices.filters.state.active.length === 0 ? this.invoices.filters.state.options : this.invoices.filters.state.active,
-          true, true, true, this.invoices.data.current_page - 1, this.invoices.filters.date.date);
+          true, true, true, this.invoices.data.current_page - 1, this.invoices.filters.date.date, this.invoices.filters.waiter.active.id);
       }else{
         this.getInvoices(this.invoices.filters.state.active.length === 0 ? this.invoices.filters.state.options : this.invoices.filters.state.active,
-          true, true, true, this.invoices.data.current_page + 1, this.invoices.filters.date.date);
+          true, true, true, this.invoices.data.current_page + 1, this.invoices.filters.date.date, this.invoices.filters.waiter.active.id);
       }
-    }
+    },
   },
 
   created(){
@@ -1076,6 +1125,6 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped> 
+<style scoped>
 
 </style>

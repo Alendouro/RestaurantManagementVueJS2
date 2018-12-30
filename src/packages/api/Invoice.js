@@ -3,7 +3,7 @@ import toastr from "toastr";
 import URLFormatter from "../url/URLFormatter";
 
 export default{
-  getInvoices(filters, paginate, meal, waiter, page, date){
+  getInvoices(filters, paginate, meal, waiter, page, date, waiterID){
     // If it has filter we need to construct the parameters
     let states = "";
     filters.forEach((e, i) => {
@@ -18,7 +18,7 @@ export default{
 
     return axios({
       method: "GET",
-      url: "api/invoice" + this.constructParameters(states, paginate, meal, waiter, page, date)
+      url: "api/invoice" + this.constructParameters(states, paginate, meal, waiter, page, date, waiterID)
     }).catch(error => {
       if (error) {
         toastr.error("There was an internal error");
@@ -61,7 +61,7 @@ export default{
     });
   },
   // ----------- AUXILIARY METHODS
-  constructParameters(states, paginate, meal, waiter, page, date) {
+  constructParameters(states, paginate, meal, waiter, page, date, waiterID) {
     let parameters = [
       states,
       paginate,
@@ -77,6 +77,7 @@ export default{
       (waiter ? URLFormatter.isFirstParameter(parameters) + "waiter=1" : "") +
       (meal ? URLFormatter.isFirstParameter(parameters) + "meal=1" : "") +
       (page !== null ? URLFormatter.isFirstParameter(parameters) + "page=" + page : "") +
-      (date !== null ? URLFormatter.isFirstParameter(parameters) + "date=" + date : "");
+      (date !== null ? URLFormatter.isFirstParameter(parameters) + "date=" + date : "") +
+      (waiterID !== null ? URLFormatter.isFirstParameter(parameters) + "waiter_id=" + waiterID : "");
   }
 }
