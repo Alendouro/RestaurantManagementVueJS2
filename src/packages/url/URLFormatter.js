@@ -15,4 +15,12 @@ export default{
     });
     return delimiter;
   },
+  /**
+   * Return the URL to the image of the item
+   * @param itemUrl
+   * @returns {string}
+   */
+  imageItem(itemUrl) {
+    return "http://restaurantmanagement.test/storage/items/" + itemUrl;
+  }
 }

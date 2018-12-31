@@ -15,6 +15,11 @@ import DashboardWaiter from "@/pages/Dashboard/DashboardWaiter.vue";
 import DashboardCashier from "@/pages/Dashboard/DashboardCashier.vue";
 import DashboardManager from "@/pages/Dashboard/DashboardManager.vue";
 import OrdersWaiter from "@/pages/Waiter/OrdersWaiter.vue";
+import MealsManager from "@/pages/Manager/Meal.vue";
+import TablesManager from "@/pages/Manager/Table.vue";
+import MenuManager from "@/pages/Manager/Menu.vue";
+import UsersManager from "@/pages/Manager/Users.vue";
+import InvoicesManager from "@/pages/Manager/Invoice.vue";
 
 const routes = [
   {
@@ -105,7 +110,32 @@ const routes = [
         path: "manager/dashboard",
         name: "Manager Dashboard",
         component: DashboardManager
-      }
+      },
+      {
+        path: "manager/meals",
+        name: "Meals",
+        component: MealsManager
+      },
+      {
+        path: "manager/tables",
+        name: "Tables",
+        component: TablesManager
+      },
+      {
+        path: "manager/menu",
+        name: "Menu",
+        component: MenuManager
+      },
+      {
+        path: "manager/users",
+        name: "Users",
+        component: UsersManager
+      },
+      {
+        path: "manager/invoices",
+        name: "Invoices",
+        component: InvoicesManager
+      },
     ]
   }
 ];

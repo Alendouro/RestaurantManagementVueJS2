@@ -18,7 +18,6 @@ import GlobalDirectives from "./globalDirectives";
 import Notifications from "./components/NotificationPlugin";
 import Vuelidate from 'vuelidate';
 import moment from 'moment';
-import Print from 'vue-print-nb'
 
 
 // MaterialDashboard plugin
@@ -41,7 +40,6 @@ Vue.use(Notifications);
 Vue.use(VueAxios, axios);
 Vue.use(Toasted);
 Vue.use(Vuelidate);
-Vue.use(Print);
 
 Vue.prototype.moment = moment;
 
