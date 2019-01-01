@@ -49,7 +49,7 @@ Vue.prototype.moment = moment;
 axios.defaults.baseURL = "http://restaurantmanagement.test";
 axios.defaults.headers.common.Authorization = "Bearer " + store.state.token;
 
-Vue.prototype.$Chartist = Chartist;
+// Vue.prototype.$Chartist = Chartist;
 
 /* eslint-disable no-new */
 new Vue({

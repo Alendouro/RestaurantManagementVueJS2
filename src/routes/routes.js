@@ -20,6 +20,7 @@ import TablesManager from "@/pages/Manager/Table.vue";
 import MenuManager from "@/pages/Manager/Menu.vue";
 import UsersManager from "@/pages/Manager/Users.vue";
 import InvoicesManager from "@/pages/Manager/Invoice.vue";
+import StatsManager from "@/pages/Manager/Stats.vue";
 
 const routes = [
   {
@@ -38,7 +39,7 @@ const routes = [
         name: "Dashboard",
         component: Dashboard
       },
-      // -------- UNSIGED USER --------
+      // -------- UNSIGNED USER --------
       {
         path: "items",
         name: "Items",
@@ -136,6 +137,12 @@ const routes = [
         name: "Invoices",
         component: InvoicesManager
       },
+      {
+        path: "manager/stats",
+        name: "Statistics",
+        component: StatsManager
+      }
+
     ]
   }
 ];

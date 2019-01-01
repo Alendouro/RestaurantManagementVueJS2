@@ -14,7 +14,11 @@
   </md-card>
 </template>
 <script>
+
+import Chartist from 'chartist';
+
 export default {
+
   name: "chart-card",
   props: {
     footerText: {
@@ -55,9 +59,11 @@ export default {
       default: ""
     }
   },
+
   data() {
     return {
-      chartId: "no-id"
+      chartId: "no-id",
+      chartInstance: null
     };
   },
   methods: {
@@ -65,20 +71,17 @@ export default {
      * Initializes the chart by merging the chart options sent via props and the default chart options
      */
     initChart() {
-      var chartIdQuery = `#${this.chartId}`;
-      this.$Chartist[this.chartType](
-        chartIdQuery,
-        this.chartData,
-        this.chartOptions
-      );
+      let divNode = document.getElementById(this.chartId);
+
+      this.chartInstance = new Chartist.Line(divNode, this.chartData, this.chartOptions);
     },
     /***
      * Assigns a random id to the chart
      */
     updateChartId() {
-      var currentTime = new Date().getTime().toString();
-      var randomInt = this.getRandomInt(0, currentTime);
-      this.chartId = `div_${randomInt}`;
+      let currentTime = new Date().getTime().toString();
+      let randomInt = this.getRandomInt(0, currentTime);
+      this.chartId = `div_cardChart_${randomInt}`;
     },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -87,6 +90,19 @@ export default {
   mounted() {
     this.updateChartId();
     this.$nextTick(this.initChart);
+  },
+  watch:{
+    data(newData, oldData){
+      console.log(newData);
+      this.chartInstance.update(newData, this.options);
+    },
+    options(newOpts) {
+      this.chartInstance.update(this.data, newOpts);
+    },
+    chartData(newData){
+      console.log("HEHE");
+      console.log(newData);
+    }
   }
 };
 </script>

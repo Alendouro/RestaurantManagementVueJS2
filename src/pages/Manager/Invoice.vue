@@ -112,17 +112,9 @@
 
 <script>
 
-import MealsAPI from "../../packages/api/Meals.js";
-import ItemsAPI from "../../packages/api/Items.js";
-import OrderAPI from "../../packages/api/Orders.js";
 import InvoiceAPI from "../../packages/api/Invoice.js";
 import InvoiceItemsAPI from "../../packages/api/InvoiceItems.js";
-import TablesAPI from "../../packages/api/Tables.js";
 import UsersAPI from "../../packages/api/Users.js";
-import { required, email } from 'vuelidate/lib/validators'
-import toastr from 'toastr';
-import _ from 'lodash';
-import swal from "sweetalert";
 import Multiselect from 'vue-multiselect'
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
