@@ -8,4 +8,7 @@ export default {};
 
 <style lang="scss">
   @import '../node_modules/bootstrap/scss/bootstrap.scss';
+  .md-tooltip{
+    max-width: none !important;
+  }
 </style>

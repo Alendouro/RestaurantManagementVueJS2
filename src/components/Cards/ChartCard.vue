@@ -73,7 +73,12 @@ export default {
     initChart() {
       let divNode = document.getElementById(this.chartId);
 
-      this.chartInstance = new Chartist.Line(divNode, this.chartData, this.chartOptions);
+      if(this.chartType === 'Line'){
+        this.chartInstance = new Chartist.Line(divNode, this.chartData, this.chartOptions);
+      }else if (this.chartType === "Bar"){
+        this.chartInstance = new Chartist.Bar(divNode, this.chartData, this.chartOptions);
+      }
+
     },
     /***
      * Assigns a random id to the chart
@@ -93,16 +98,15 @@ export default {
   },
   watch:{
     data(newData, oldData){
-      console.log(newData);
       this.chartInstance.update(newData, this.options);
     },
     options(newOpts) {
       this.chartInstance.update(this.data, newOpts);
-    },
-    chartData(newData){
-      console.log("HEHE");
-      console.log(newData);
     }
   }
 };
 </script>
+
+<style scoped>
+
+</style>
