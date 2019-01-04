@@ -15,7 +15,7 @@
                          style="z-index: 9999;" id="invoice_state"></multiselect>
           </div>
           <div class="col-md-6">
-            <label for="invoice_waiter">User</label>
+            <label for="invoice_waiter">Waiter</label>
             <multiselect v-model="invoices.filters.waiter.active"
                          :options="invoices.filters.waiter.options"
                          @search-change="searchUsersInvoices"
@@ -164,6 +164,9 @@ export default {
       window.scrollTo(0,document.body.scrollHeight);
 
       InvoiceItemsAPI.getInvoiceItems(invoice.id).then(items => {
+        items.data.forEach(function(item){
+          console.log(item.name);
+        });
         this.invoices.selected.items = items.data;
       });
     },

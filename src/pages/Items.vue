@@ -55,7 +55,7 @@ export default {
           // Fill the items with the data received from API
           this.items = items.data.data;
           // Fill the pages with the pages and urls necessary
-          this.makePagination(items);
+          this.makePagination(items.data);
         })
         .catch(error => {
           if (error){

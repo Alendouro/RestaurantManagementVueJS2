@@ -110,4 +110,17 @@ export default {
         }
       });
   },
+  // Start and End Shift
+  startShift(id){
+    axios.put('/api/user/startShift/' + id)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      if (error){
+        toastr.error("There was an internal error");
+        return false;
+      }
+    })
+  }
 }
