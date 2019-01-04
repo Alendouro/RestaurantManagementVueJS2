@@ -87,27 +87,5 @@ export default {
       });
   },
   // --------- STATS ROUTES
-  getUserPerformance(user){
-    return axios({
-      method: "GET",
-      url: "/api/statistics/users/" + user.id + "/performance"
-    })
-      .then(r => {
-        return r;
-      })
-      .catch(err => {
-        let statusCode = err.response.status;
-        if (statusCode === 404) {
-          toastr.error("User was not found", "ERROR");
-          return false;
-        }
-        if (statusCode === 403) {
-          toastr.error(err.response.data.error.message, "ERROR");
-          return false;
-        }
-        if (statusCode === 500) {
-          toastr.error("There was an internal error", "ERROR");
-        }
-      });
-  },
+
 }
