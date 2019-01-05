@@ -4,7 +4,7 @@
       <div class="md-layout-item">
         <md-button class="md-info md-just-icon align-bottom-right"
                    v-show="(invoices.selected.invoice !== null ? invoices.selected.invoice.state === 'paid' : false)"
-                   @click="printInvoice"><md-icon >print</md-icon></md-button>
+                   @click="downloadInvoice(invoices.selected.invoice.id)"><md-icon >print</md-icon></md-button>
         <h4><md-icon >filter_list</md-icon>Filters</h4>
         <div class="row">
           <div class="col-md-6">
@@ -196,21 +196,19 @@ export default {
       this.invoices.filters.date.date = dateF;
       return dateF;
     },
-    printInvoice(){
-      let mywindow = window.open('', 'PRINT', 'height=400,width=600');
+    downloadInvoice(invoiceID){
+      InvoiceAPI.getDownloadPDF(invoiceID).then(r => {
+        if(r.status === 200){
+          let blob = new Blob([r.data], {type: 'application/pdf'});
+          let link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = 'invoice_'+ invoiceID +'.pdf';
+          link.click();
+          return;
+        }
 
-      mywindow.document.write('<html><head><title></title>');
-      mywindow.document.write('<link rel="stylesheet" href="http://restaurantmanagement.test/css/PDFPrinting.css" type="text/css" />');
-      mywindow.document.write('</head><body >');
-      mywindow.document.write('<h4 style="text-align: center;">FATURA RESTAURANTE DAD</h4>');
-      mywindow.document.write(document.getElementById('invoiceItems').innerHTML);
-      mywindow.document.write('</body></html>');
-
-      mywindow.document.close(); // necessary for IE >= 10
-      mywindow.focus(); // necessary for IE >= 10*/
-
-      mywindow.print();
-      mywindow.close();
+        toastr.error("There was an error while downloading your file", "ERROR");
+      });
     },
     invoicesPaginate(direction){
       if(direction === 'last'){

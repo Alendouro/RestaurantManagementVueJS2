@@ -37,6 +37,30 @@ export default{
       }
     });
   },
+  getPaid(paginate, pageNumber){
+    return axios({
+      method: "GET",
+      url: "api/invoice/paid?" + (paginate ? "paginate=1" : "") + (pageNumber !== null ? "&page=" + pageNumber : "")
+    }).catch(error => {
+      if (error) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
+  },
+  getDownloadPDF(invoiceID){
+    return axios({
+      method: "GET",
+      url: "api/invoice/download/" + invoiceID,
+      // Necessary to treat the PDF as an array buffer
+      responseType: "arraybuffer"
+    }).catch(error => {
+      if (error) {
+        toastr.error("There was an internal error");
+        return false;
+      }
+    });
+  },
   updateInvoice(data, invoiceID) {
     return axios({
       method: "PUT",

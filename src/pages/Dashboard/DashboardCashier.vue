@@ -5,7 +5,7 @@
         <md-button class="md-default" v-show="!toggles.invoices" @click="toggle('invoices', null)"><md-icon >keyboard_arrow_left</md-icon></md-button>
         <!-- INVOICE LIST -->
         <div v-if="toggles.invoices">
-          <h3>INVOICES</h3>
+          <h3 class="d-inline">INVOICES</h3><small>  pending</small>
           <div class="row" v-for="invoices in groupedItems(this.invoices.pending, 4)" :key="invoices.id">
             <div class="col-md-3" v-for="invoice in invoices" :key="invoice.id">
               <md-card>
@@ -78,6 +78,43 @@
             </div>
           </div>
         </div>
+        <div class="row" v-if="invoices.paid.length !== 0">
+          <div class="col-md-12">
+            <md-card>
+              <md-card-header data-background-color="green">
+                <h4 class="title">Invoices</h4> <small>paid</small>
+              </md-card-header>
+              <md-card-content>
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>NIF</th>
+                    <th>DATE</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="(invoice) in invoices.paid.data" :key="invoice.id">
+                    <td class="pt-4">{{ invoice.id }}</td>
+                    <td class="pt-4">{{ invoice.name }}</td>
+                    <td class="pt-4">{{ invoice.nif }}</td>
+                    <td class="pt-4">{{ invoice.created_at }}</td>
+                    <td class="p-0">
+                      <md-button class="md-block md-success" @click="downloadInvoice(invoice.id)">
+                        <md-icon >cloud_download</md-icon>
+                      </md-button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+                <md-button :disabled="invoices.paid.prev_page_url === null" @click="invoicesPaginate('last')">LAST</md-button>
+                <md-button :disabled="invoices.paid.next_page_url === null" @click="invoicesPaginate('next')">NEXT</md-button>
+              </md-card-content>
+            </md-card>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -93,7 +130,6 @@ import InvoiceItemsAPI from "../../packages/api/InvoiceItems.js";
 import toastr from 'toastr';
 import _ from 'lodash';
 import swal from "sweetalert";
-
 
 export default {
   data() {
@@ -119,7 +155,7 @@ export default {
   },
   methods: {
     getInvoice(){
-      InvoiceAPI.getInvoices(['pending'], false, true, true).then(invoices => {
+      InvoiceAPI.getInvoices(['pending'], false, true, true, null, null, null).then(invoices => {
         this.invoices.pending = invoices.data;
       });
     },
@@ -129,6 +165,11 @@ export default {
     getInvoiceItems(invoiceID){
       InvoiceItemsAPI.getInvoiceItems(invoiceID).then(items => {
         this.invoiceSelectedDetails.orders = items.data;
+      });
+    },
+    getInvoicePaid(){
+      InvoiceAPI.getPaid(true, null).then(r => {
+        this.invoices.paid = r.data;
       });
     },
     toggle(section, invoice){
@@ -200,10 +241,31 @@ export default {
           this.toggles[key] = (!!show); // either show or hide the sections
         }
       }
+    },
+    invoicesPaginate(direction){
+      if(direction === 'last'){
+        InvoiceAPI.getPaid(true, this.invoices.paid.current_page - 1).then(r => {
+          this.invoices.paid = r.data;
+        });
+      }else{
+        InvoiceAPI.getPaid(true, this.invoices.paid.current_page + 1).then(r => {
+          this.invoices.paid = r.data;
+        });
+      }
+    },
+    downloadInvoice(invoiceID){
+      InvoiceAPI.getDownloadPDF(invoiceID).then(r => {
+        let blob = new Blob([r.data], {type: 'application/pdf'});
+        let link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'invoice_'+ invoiceID +'.pdf';
+        link.click();
+      });
     }
   },
   created(){
     this.getInvoice();
+    this.getInvoicePaid();
   },
 };
 </script>
