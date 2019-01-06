@@ -43,10 +43,32 @@ export default {
         });
     },
     updateState(order){
-      console.log(order);
-      OrdersAPI.changeState('/api/orders/changeState/' + order.id);
-    }
+      OrdersAPI.changeState('/api/orders/changeState/' + order.id).then(response =>{
+        this.$socket.emit('order_changed', response.data.order);
+      })
+    },
+    getOrderChanged: function(order){
+      for (let idx in this.orders) {
+          if (this.orders[idx].id == order.id){
+            if (this.orders[idx].id != "confirmed"){
+              this.orders.splice(idx, 1);
+            }
+          } 
+        }
+        if (order.state == "confirmed"){
+          return order;
+        }
+        return null;
+	  },
   },
+  sockets: {
+    order_changed(orderChanged){
+      let refToChangedOrder = this.getOrderChanged(orderChanged);
+      if (refToChangedOrder !== null) {
+          this.orders.push(orderChanged);
+      }
+    },
+  },        	
   created(){
     this.user = this.$store.state.user;
     this.fetchItems();   

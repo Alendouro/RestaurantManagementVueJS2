@@ -182,7 +182,6 @@ export default {
         this.notifyVue('top','right', dataFromServer);
       },
       msg_from_user_to_managers(dataFromServer){
-        console.log(dataFromServer);
         this.notifyVue('top','right', dataFromServer);
       },
     },

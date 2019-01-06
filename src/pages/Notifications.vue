@@ -65,8 +65,10 @@
                   <span><b> Warning - </b> This is a regular notification made with ".alert-warning"</span>
                 </div>
                 <div class="alert alert-danger">
-                  <button type="button" aria-hidden="true" class="close">×</button>
                   <span><b> Danger - </b> This is a regular notification made with ".alert-danger"</span>
+                   <div class="md-layout-item md-size-100 text-right">
+                    <md-button class="md-raised md-warning" @click="$router.push('/items')">Go to Page</md-button>
+                  </div>
                 </div>
                 <div class="alert alert-primary">
                   <button type="button" aria-hidden="true" class="close">×</button>
@@ -111,7 +113,6 @@ export default {
     if (this.$store.state.user === null) {
       this.$toasted.error('User is not logged in. Department is unknown!');
     } else {
-      console.log("AAAAA");
       this.$socket.emit('msg_from_user_to_managers',
       this.messageToSendToManagers, this.$store.state.user);
     }
