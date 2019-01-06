@@ -40,6 +40,7 @@
               <thead>
               <tr>
                 <th>Table</th>
+                <th>State</th>
                 <th>Item</th>
                 <th>Price</th>
                 <th>Time</th>
@@ -48,6 +49,7 @@
               <tbody>
               <tr v-for="orderConfirmed in orders.confirmed" :key="orderConfirmed.id" class="bg-success text-white">
                 <td>{{ orderConfirmed.meal.table_number }}</td>
+                <td>{{ orderConfirmed.state }}</td>
                 <td>{{ orderConfirmed.item.name }}</td>
                 <td>{{ orderConfirmed.item.price }}</td>
                 <td>{{ orderConfirmed.item.created_at }}</td>
@@ -55,6 +57,7 @@
               </tr>
               <tr v-for="orderPending in orders.pending" :key="orderPending.id" class="bg-info text-white">
                 <td>{{ orderPending.meal.table_number }}</td>
+                <td>{{ orderPending.state }}</td>
                 <td>{{ orderPending.item.name }}</td>
                 <td>{{ orderPending.item.price }}</td>
                 <td>{{ orderPending.item.created_at }}</td>
@@ -125,8 +128,45 @@ export default {
           toastr.error('Record doesn\'t doesnt exist', 'error');
         }
       });
-    }
+    },
+    getOrderChanged: function(order){
+      for (let idx in this.orders.confirmed) {
+          if (this.orders.confirmed[idx].id == order.id){
+            if (this.orders.confirmed[idx].id != "confirmed"){
+              this.orders.confirmed.splice(idx, 1);
+            }
+          } 
+        }
+      for (let idx in this.orders.pending) {
+          if (this.orders.pending[idx].id == order.id){
+            if (this.orders.pending[idx].id != "prepared"){
+              this.orders.pending.splice(idx, 1);
+            }
+          } 
+        }
+      for (let idx in this.orders.prepared) {
+        if (this.orders.prepared[idx].id == order.id){
+          if (this.orders.prepared[idx].id != "prepared"){
+            this.orders.prepared.splice(idx, 1);
+          }
+        } 
+      }
+      if (order.state == "confirmed"){
+        this.orders.confirmed.push(order);
+      }
+      if (order.state == "pending"){
+        this.orders.pending.push(order);
+      }
+      if (order.state == "prepared"){
+        this.orders.prepared.push(order);
+      }
+	  },
   },
+  sockets: {
+    order_changed(orderChanged){
+      this.getOrderChanged(orderChanged);
+    },
+  },   
   created(){
     this.getMyOrders(['pending', 'confirmed', 'prepared']);
   },

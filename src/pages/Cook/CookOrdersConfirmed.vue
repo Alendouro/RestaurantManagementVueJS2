@@ -7,7 +7,7 @@
       <md-table-row slot="md-table-row" v-for="order in orders" :key="order.id">
         <md-table-cell md-label="Name">{{ order.item.name }}</md-table-cell>
         <md-table-cell md-label="State">{{ order.state }}</md-table-cell>
-        <md-button class="md-raised md-primary" data-background-color="orange" @click="updateState(order)">Change state</md-button>
+        <md-button class="md-raised md-primary" data-background-color="orange" @click="updateState(order)">In Preparation</md-button>
       </md-table-row>
     </md-table>
 </template>
@@ -63,6 +63,7 @@ export default {
   },
   sockets: {
     order_changed(orderChanged){
+      console.log("recebeu nos cooks");
       let refToChangedOrder = this.getOrderChanged(orderChanged);
       if (refToChangedOrder !== null) {
           this.orders.push(orderChanged);

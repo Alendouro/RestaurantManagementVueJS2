@@ -6,7 +6,7 @@
 
       <md-table-row slot="md-table-row" v-for="order in orders" :key="order.id">
         <md-table-cell md-label="Name">{{ order.item.name }}</md-table-cell>
-        <md-button class="md-raised md-primary" data-background-color="green" @click="updateState(order)">Change state</md-button>
+        <md-button class="md-raised md-primary" data-background-color="green" @click="updateState(order)">Prepared</md-button>
       </md-table-row>
     </md-table>
 </template>
