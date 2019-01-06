@@ -54,6 +54,8 @@ Vue.use(new VueSocketio({
 axios.defaults.baseURL = "http://restaurantmanagement.test";
 axios.defaults.headers.common.Authorization = "Bearer " + store.state.token;
 
+Vue.prototype.moment = moment;
+
 // Vue.prototype.$Chartist = Chartist;
 
 /* eslint-disable no-new */
