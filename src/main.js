@@ -18,6 +18,7 @@ import GlobalDirectives from "./globalDirectives";
 import Notifications from "./components/NotificationPlugin";
 import Vuelidate from 'vuelidate';
 import VueMoment from 'vue-moment';
+import VueSocketio from 'vue-socket.io';
 
 
 // MaterialDashboard plugin
@@ -41,6 +42,11 @@ Vue.use(VueAxios, axios);
 Vue.use(Toasted);
 Vue.use(Vuelidate);
 Vue.use(VueMoment);
+Vue.use(new VueSocketio({
+  debug: true,
+  connection: 'http://127.0.0.1:8088'
+ })); 
+ 
 
 /*
 * Fazer o axios assumir uma URL por padrão
@@ -57,7 +63,7 @@ new Vue({
   router,
   store,
   data: {
-    Chartist: Chartist
-  }
+    Chartist: Chartist,
+  },
 });
 

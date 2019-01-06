@@ -7,7 +7,7 @@
 6 silly lifecycle vue-material-dashboard@1.0.2~predev: no script for predev, continuing
 7 info lifecycle vue-material-dashboard@1.0.2~dev: vue-material-dashboard@1.0.2
 8 verbose lifecycle vue-material-dashboard@1.0.2~dev: unsafe-perm in lifecycle true
-9 verbose lifecycle vue-material-dashboard@1.0.2~dev: PATH: /usr/share/npm/bin/node-gyp-bin:/home/alendouro/WebDevelopment/RestaurantManagementVueJS2/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+9 verbose lifecycle vue-material-dashboard@1.0.2~dev: PATH: /usr/share/npm/bin/node-gyp-bin:/home/alendouro/WebDevelopment/RestaurantManagementVueJS2/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 10 verbose lifecycle vue-material-dashboard@1.0.2~dev: CWD: /home/alendouro/WebDevelopment/RestaurantManagementVueJS2
 11 silly lifecycle vue-material-dashboard@1.0.2~dev: Args: [ '-c', 'npm run serve' ]
 12 silly lifecycle vue-material-dashboard@1.0.2~dev: Returned: code: 1  signal: null

@@ -2,6 +2,27 @@
   <div class="content">
     <div class="md-layout">
       <div class="md-layout-item">
+
+        <md-card>
+          <md-card-header data-background-color="green">
+            <h4 class="title">Send Notification to Managers</h4>
+          </md-card-header>
+          <md-card-content>
+            <div class="md-layout">
+              <div class="md-layout-item md-medium-size-100">
+               <md-field>
+                 <label>Message</label>
+                <md-input v-model="messageToSendToManagers" type="text"></md-input>
+              </md-field>
+              <div class="md-layout-item md-size-100 text-right">
+                <md-button class="md-raised md-success" @click="msgToManagers">Send</md-button>
+              </div>
+              </div>
+            </div>
+          </md-card-content>
+        </md-card>
+
+
         <md-card>
           <md-card-header data-background-color="green">
             <h4 class="title">Notifications</h4>
@@ -78,23 +99,23 @@
 export default {
   data() {
     return {
-      type: ["", "info", "success", "warning", "danger"],
+      messageToSendToManagers: "",
+      //type: ["", "info", "success", "warning", "danger"],
       notifications: {
         topCenter: false
       }
     };
   },
   methods: {
-    notifyVue(verticalAlign, horizontalAlign) {
-      var color = Math.floor(Math.random() * 4 + 1);
-      this.$notify({
-        message:
-          "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer.",
-        icon: "add_alert",
-        horizontalAlign: horizontalAlign,
-        verticalAlign: verticalAlign,
-        type: this.type[color]
-      });
+   msgToManagers: function(){
+    if (this.$store.state.user === null) {
+      this.$toasted.error('User is not logged in. Department is unknown!');
+    } else {
+      console.log("AAAAA");
+      this.$socket.emit('msg_from_user_to_managers',
+      this.messageToSendToManagers, this.$store.state.user);
+    }
+      this.messageToSendToManagers = "";
     }
   }
 };

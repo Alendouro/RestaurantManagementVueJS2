@@ -67,6 +67,7 @@
         <div class="row">
           <div class="col-sm-12">
             <md-button class="md-info md-block mt-1" @click="saveUser()" :disabled="$v.users.edit.$invalid">SAVE USER</md-button>
+            <md-button class="m-0 md-info md-block mt-1" @click="sendEmail()">Send Email</md-button>
           </div>
         </div>
         <div class="row" v-for="users in groupedItems(this.users.all, 3)" :key="users.id">
@@ -178,6 +179,20 @@ export default {
         }
       });
     },
+    sendEmail(){
+      // using SendGrid's v3 Node.js Library
+      // https://github.com/sendgrid/sendgrid-nodejs
+      const sgMail = require('@sendgrid/mail');
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
+        to: 'miguelalendouro@gmail.com',
+        from: 'm1@mail.pt',
+        subject: 'Sending with SendGrid is Fun',
+        text: 'and easy to do anywhere, even with Node.js',
+        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+      };
+      sgMail.send(msg);
+    },
     editUser(user){
       this.users.edit = user;
       window.scrollTo(0, 0);
@@ -185,7 +200,7 @@ export default {
     deleteUser(user){
       // If the user is soft deleted we will throw an warning saying that this action will actually delete user form DB
       if(user.deleted_at !== null){
-        swal('Deleting user forever', 'By doing this you will permanently delete the user', 'warning',{
+        swal('Deleting user forever', 'By doing this you willtest permanently delete the user', 'warning',{
           buttons:{
             cancel: "Not delete",
             catch:{

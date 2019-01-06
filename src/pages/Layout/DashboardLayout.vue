@@ -86,7 +86,6 @@
         <p>Statistics</p>
       </sidebar-link>
 
-
       <sidebar-link v-if="loggedIn" class="showOnLogin" to="/notifications">
         <md-icon>notifications</md-icon>
         <p>Notifications</p>
@@ -133,9 +132,11 @@ export default {
     startShift(){
       this.axios.put('/api/user/startShift/' + this.user.id)
       .then(response => {
-        console.log(response.data);
         this.$store.commit('setUser', response.data);
         this.user = this.$store.state.user;
+        if (this.user.type == "manager"){
+          this.$socket.emit('user_enter', this.user);
+        }
         toastr.success("You're now working!");
       })
       .catch(error => {
@@ -148,19 +149,43 @@ export default {
     endShift(){
       this.axios.put('/api/user/endShift/' + this.user.id)
       .then(response => {
-        console.log(response.data);
         this.$store.commit('setUser', response.data);
         this.user = this.$store.state.user;
+        if(this.user.type == "manager"){
+          this.$socket.emit('user_exit', this.user);
+        }
         toastr.success("You just ended your shift");
       })
       .catch(error => {
         if (error){
+          this.$socket.emit('user_exit', this.$store.state.user);
           toastr.error("There was an internal error");
           return false;
         }
       })
+    },
+    notifyVue(verticalAlign, horizontalAlign, message) {
+      this.$notify({
+        message: message,
+        icon: "add_alert",
+        horizontalAlign: horizontalAlign,
+        verticalAlign: verticalAlign,
+        type: "danger"
+      });
     }
   },
+  sockets:{
+    connect(){
+      console.log('socket connected (socket ID = '+this.$socket.id+')');
+      },
+      msg_from_server(dataFromServer){
+        this.notifyVue('top','right', dataFromServer);
+      },
+      msg_from_user_to_managers(dataFromServer){
+        console.log(dataFromServer);
+        this.notifyVue('top','right', dataFromServer);
+      },
+    },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
