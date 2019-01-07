@@ -8,6 +8,7 @@
             <md-card>
               <md-card-header data-background-color="green">
                 <h4 class="title">Invoices <small>pending</small> & Meals <small>terminated</small></h4>
+                <h5 class="title">TOTAL: {{ this.invoices.pending.length + this.meals.terminated.length }}</h5>
               </md-card-header>
               <md-card-content>
                 <table class="table">

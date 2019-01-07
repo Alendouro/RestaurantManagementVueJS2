@@ -28,6 +28,7 @@
 </template>
 
 <script>
+
 export default {
   name: "Login",
   props: {
@@ -49,12 +50,18 @@ export default {
         password: this.password,
       })
         .then(response => {
+          if(response == "error"){
+            return false;
+          }
           this.axios.defaults.headers.common.Authorization = "Bearer " + response.data.access_token;
           return this.axios.get("/api/user");
         })
         .then(response => {
+          if(response == "error"){
+            return false;
+          }
           this.$store.commit('setUser', response.data);
-          this.$router.push('/');
+          this.$router.push('/' + response.data.type + '/dashboard');
         });
     }
   }

@@ -3,6 +3,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from 'axios';
+import toastr from 'toastr';
+
 
 Vue.use(Vuex);
 
@@ -78,8 +80,17 @@ const store = new Vuex.Store({
             resolve(response);
           })
           .catch(error => {
-            console.log(error);
+            let statusCode = error.response.status;
+            if(statusCode === 401){
+              toastr.error("Invalid credentials", 'ERROR');
+            }
+
+            if(statusCode === 500){
+              toastr.error("There was an internal error", 'ERROR');
+            }
             reject(error);
+
+            return "error";
           });
       });
     },
