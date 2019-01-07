@@ -21,6 +21,7 @@ import MenuManager from "@/pages/Manager/Menu.vue";
 import UsersManager from "@/pages/Manager/Users.vue";
 import InvoicesManager from "@/pages/Manager/Invoice.vue";
 import StatsManager from "@/pages/Manager/Stats.vue";
+import ADDUserManager from "@/pages/Manager/ADDUser.vue";
 
 const routes = [
   {
@@ -141,6 +142,11 @@ const routes = [
         path: "manager/stats",
         name: "Statistics",
         component: StatsManager
+      },
+      {
+        path: "manager/adduser",
+        name: "Add User",
+        component: ADDUserManager
       }
 
     ]

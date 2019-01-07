@@ -86,6 +86,38 @@ export default {
         }
       });
   },
+  createUser(user){
+    return axios({
+      method: "POST",
+      url: "/api/users",
+      data: user
+    })
+      .then(r => {
+      return r;
+  })
+    .catch(err => {
+      let statusCode = err.response.status;
+      if (statusCode === 403) {
+        toastr.error(err.response.data.error.message, "ERROR");
+      }
+      if (statusCode === 500) {
+        toastr.error("There was an internal error", "ERROR");
+      }
+
+      if(statusCode === 422){
+        let data = err.response.data;
+        for(let field in data.errors){
+          if (data.errors.hasOwnProperty(field)) {
+            data.errors[field].forEach(message => {
+              toastr.error(message, field)
+            })
+          }
+        }
+      }
+
+      return false;
+    });
+  }
   // --------- STATS ROUTES
   getUserPerformance(user){
     return axios({
@@ -123,5 +155,6 @@ export default {
       }
     })
   }
+
 
 }
