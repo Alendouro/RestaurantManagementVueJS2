@@ -12,29 +12,27 @@
         </md-button>
 
         <div class="md-collapse">
-          <div class="md-autocomplete">
-            <md-autocomplete class="search" v-model="selectedEmployee" :md-options="employees">
-              <label>Search...</label>
-            </md-autocomplete>
-          </div>
           <md-list>
-            <md-list-item v-if="loggedIn" class="showOnLogin" to="/">
-              <i class="material-icons">dashboard</i>
-              <p class="hidden-lg hidden-md">Dashboard</p>
-            </md-list-item>
             <md-list-item to="/notifications" class="dropdown">
               <drop-down>
                 <a slot="title" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="material-icons">notifications</i>
-                  <span class="notification">5</span>
+                  <span class="notification">{{this.notifications.length}}</span>
                   <p class="hidden-lg hidden-md">Notifications</p>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a href="#">Mike John responded to your email</a></li>
-                  <li><a href="#">You have 5 new tasks</a></li>
-                  <li><a href="#">You're now friend with Andrew</a></li>
-                  <li><a href="#">Another Notification</a></li>
-                  <li><a href="#">Another One</a></li>
+                  <li v-for="notification in notifications" :key="notification.message">
+                    <a> 
+                      <b>{{notification.user}}: </b>
+                      {{notification.message}}
+                      <a v-if="notification.button">
+                        <md-button>{{notification.button}}</md-button>
+                      </a>
+                    </a>
+                  </li>
+                  <li class="text-right">
+                    <md-button @click.prevent="clearNotifications" class="md-success md-size-100">Clear</md-button>
+                  </li>
                 </ul>
               </drop-down>
             </md-list-item>
@@ -72,13 +70,65 @@ export default {
         "Kelly Kapoor",
         "Ryan Howard",
         "Kevin Malone"
-      ]
+      ], 
+      notifications: [],
     };
   },
   methods: {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
-    }
+    },
+    notifyVue(verticalAlign, horizontalAlign, message) {
+      this.$notify({
+        message: message,
+        icon: "add_alert",
+        horizontalAlign: horizontalAlign,
+        verticalAlign: verticalAlign,
+        type: "success"
+      });
+    },
+    clearNotifications(){
+      this.notifications = [];
+    },
+  },
+  sockets:{
+    connect(){
+      console.log('socket connected (socket ID = '+this.$socket.id+')');
+      },
+      msg_from_server(dataFromServer){
+        this.notifyVue('top','right', dataFromServer);
+        this.notifications.push(
+          {message: dataFromServer}
+        )
+      },
+      msg_from_user_to_managers(dataFromServer){
+        this.notifyVue('top','right', dataFromServer[1].name + ": " + dataFromServer[0]);
+        this.notifications.push(
+          {
+            message: dataFromServer[0],
+            user: dataFromServer[1].name,
+          },
+        )
+        console.log(this.notifications);
+      },
+      meal_terminated(dataFromServer){
+        this.notifyVue('top', 'right', dataFromServer[0].name +': has terminated meal from table ' + dataFromServer[1].table_number);
+        this.notifications.push(
+          {
+            message: 'has terminated meal from table ' + dataFromServer[1].table_number,
+            user: dataFromServer[0].name,
+            button: "meals",
+          },
+        )
+      },
+      invoice_paid(dataFromServer){
+        this.notifyVue('top', 'right', dataFromServer);
+        this.notifications.push(
+          {
+            message: dataFromServer,
+            button: "Invoices"
+          })
+      },
   },
   computed: {
     loggedIn() {

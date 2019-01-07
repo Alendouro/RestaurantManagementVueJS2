@@ -100,7 +100,7 @@
                     <td class="pt-4">{{ invoice.id }}</td>
                     <td class="pt-4">{{ invoice.name }}</td>
                     <td class="pt-4">{{ invoice.nif }}</td>
-                    <td class="pt-4">{{ invoice.created_at }}</td>
+                    <td class="pt-4">{{ invoice.updated_at }}</td>
                     <td class="p-0">
                       <md-button class="md-block md-success" @click="downloadInvoice(invoice.id)">
                         <md-icon >cloud_download</md-icon>
@@ -216,7 +216,7 @@ export default {
         }
 
         // Remove this invoice from the array
-        const invPending = this.invoices.pending;
+        const invPending = this.invoices.pending.splice();
 
         _.remove(invPending, (inv) => {
             return inv.id === this.invoiceSelectedDetails.invoice.id;
@@ -231,6 +231,11 @@ export default {
         // Reset name and nif fields
         this.invoiceSelectedDetails.paymentDetail.name = "";
         this.invoiceSelectedDetails.paymentDetail.nif = "";
+
+        //Socket
+         this.$socket.emit('invoice_changed', response.data);
+         console.log(response.data);
+         this.$socket.emit('invoice_paid', this.$store.state.user, response.data.name, response.data.meal.table_number);
       });
     },
 
@@ -261,7 +266,56 @@ export default {
         link.download = 'invoice_'+ invoiceID +'.pdf';
         link.click();
       });
-    }
+    },
+    auxOrderChanged: function(invoiceChanged){
+      for (let idx in this.invoices.pending) {
+        if (this.invoices.pending[idx].id == invoiceChanged.id){
+          if (this.invoices.pending[idx].state != "pending"){
+            this.invoices.pending.splice(idx, 1);
+          } 
+          else {
+            return null;
+          }
+        } 
+      } 
+      for (let idx in this.invoices.paid.data) {
+        if (this.invoices.paid.data[idx].id == invoiceChanged.id){
+          if (this.invoices.paid.data[idx].state != "paid"){
+            this.invoices.paid.data.splice(idx, 1);
+          }
+          else {
+            return null;
+          }
+        } 
+      }
+      for (let idx in this.invoices.notPaid) {
+        if (this.invoices.notPaid[idx].id == invoiceChanged.id){
+          if (this.invoices.notPaid[idx].state != "not paid"){
+            this.invoices.notPaid.splice(idx, 1);
+          }
+          else {
+            return null;
+          }
+        } 
+      }
+
+      if (invoiceChanged.state == "pending"){
+        this.invoices.pending.push(invoiceChanged);
+      }
+      if (invoiceChanged.state == "paid") {
+        this.invoices.paid.data.unshift(invoiceChanged);
+      }
+      if (invoiceChanged.state == "not paid") {
+        this.invoices.notPaid.unshift(invoiceChanged);
+      }
+
+        return null;
+	  },
+  },
+  sockets: {
+    invoice_changed(invoiceChanged){
+      this.auxOrderChanged(invoiceChanged);
+    },
   },
   created(){
     this.getInvoice();

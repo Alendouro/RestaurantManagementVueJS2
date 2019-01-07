@@ -1,13 +1,13 @@
 <template>
   <div class="sidebar" :data-color="activeColor" :data-image="backgroundImage" :style="sidebarStyle">
     <div class="logo">
-      <a href="#" class="simple-text logo-mini">
+      <a href="/items" class="simple-text logo-mini">
         <div class="logo-img">
             <img :src="imgLogo" alt="">
         </div>
       </a>
 
-      <a href="https://www.creative-tim.com/product/vue-material-dashboard" target="_blank" class="simple-text logo-normal">
+      <a href="/items" target="_blank" class="simple-text logo-normal">
         {{title}}
       </a>
     </div>
@@ -37,7 +37,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "dad"
+      default: "Foodzito"
     },
     backgroundImage: {
       type: String,
@@ -45,7 +45,8 @@ export default {
     },
     imgLogo: {
       type: String,
-      default: require("@/assets/img/vue-logo.png")
+      //@/assets/img/vue-logo.png
+      default: "http://restaurantmanagement.test/logoPNG.png"
     },
     activeColor: {
       type: String,

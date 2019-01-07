@@ -63,7 +63,6 @@ export default {
   },
   sockets: {
     order_changed(orderChanged){
-      console.log("recebeu nos cooks");
       let refToChangedOrder = this.getOrderChanged(orderChanged);
       if (refToChangedOrder !== null) {
           this.orders.push(orderChanged);

@@ -164,27 +164,7 @@ export default {
         }
       })
     },
-    notifyVue(verticalAlign, horizontalAlign, message) {
-      this.$notify({
-        message: message,
-        icon: "add_alert",
-        horizontalAlign: horizontalAlign,
-        verticalAlign: verticalAlign,
-        type: "danger"
-      });
-    }
   },
-  sockets:{
-    connect(){
-      console.log('socket connected (socket ID = '+this.$socket.id+')');
-      },
-      msg_from_server(dataFromServer){
-        this.notifyVue('top','right', dataFromServer);
-      },
-      msg_from_user_to_managers(dataFromServer){
-        this.notifyVue('top','right', dataFromServer);
-      },
-    },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;

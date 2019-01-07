@@ -49,8 +49,11 @@ export default {
     getOrderChanged: function(order){
       for (let idx in this.orders) {
           if (this.orders[idx].id == order.id){
-            if (this.orders[idx].id != "in preparation"){
+            if (this.orders[idx].state != "in preparation"){
               this.orders.splice(idx, 1);
+            }
+            else {
+              return null;
             }
           } 
         }

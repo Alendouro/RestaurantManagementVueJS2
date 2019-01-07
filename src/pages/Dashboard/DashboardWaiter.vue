@@ -292,8 +292,10 @@ export default {
             switch (value) {
               case "delete":
                 MealsAPI.postCloseMeal(['eliminateNotDelivered'], mealID).then(response => {
-                  // console.log(response);
                   swal("Meal closed", "Your meal has been closed and all products different than 'delivered' set to 'not delivered'", "success");
+                  //Socket
+                  this.$socket.emit('invoice_changed', response.data);
+                  this.$socket.emit('meal_terminated', this.$store.state.user, response.data.meal);
                 }).catch(error => {
                   console.log(error);
                 });
@@ -307,6 +309,10 @@ export default {
 
         this.removeMealFromArray(mealID);
         swal("Meal has been closed successfully", "", "success");
+
+        //Socket
+       this.$socket.emit('meal_terminated', this.$store.state.user, response.data.meal);
+        this.$socket.emit('invoice_changed', response.data);
 
       });
     },

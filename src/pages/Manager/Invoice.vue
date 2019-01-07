@@ -164,9 +164,6 @@ export default {
       window.scrollTo(0,document.body.scrollHeight);
 
       InvoiceItemsAPI.getInvoiceItems(invoice.id).then(items => {
-        items.data.forEach(function(item){
-          console.log(item.name);
-        });
         this.invoices.selected.items = items.data;
       });
     },
@@ -219,8 +216,40 @@ export default {
           true, true, true, this.invoices.data.current_page + 1, this.invoices.filters.date.date, this.invoices.filters.waiter.active.id);
       }
     },
+    getInvoiceChanged: function(invoiceChanged){
+      //with filters
+      if (this.invoices.data != null){
+        for (let idx in this.invoices.data.data) {
+          if (this.invoices.data.data[idx].id == invoiceChanged.id){
+            if (this.invoices.data.data[idx].id != "not paid" || this.invoices.data.data[idx].id != "paid" || this.invoices.data.data[idx].id != "pending"){
+              this.invoices.data.data.splice(idx, 1);
+            }
+          } 
+        }
+      }
+      //faz push do elemento
 
+      console.log(this.invoices);
+      if (invoiceChanged.state == "pending"){
+        this.invoices.data.data.push(invoiceChanged);
+      }
+
+      if (invoiceChanged.state == "paid"){
+        this.invoices.data.data.push(invoiceChanged);
+      }
+
+       if (invoiceChanged.state == "not paid"){
+        this.invoices.data.data.push(invoiceChanged);
+      }
+
+        return null;
+	  },
   },
+  sockets: {
+    invoice_changed(invoiceChanged){
+      this.getInvoiceChanged(invoiceChanged);
+    },
+  },        
   created(){
     this.getInvoices(this.invoices.filters.state.active.length === 0 ? this.invoices.filters.state.options : this.invoices.filters.state.active,
       true,

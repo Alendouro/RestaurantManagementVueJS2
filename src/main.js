@@ -42,6 +42,9 @@ Vue.use(VueAxios, axios);
 Vue.use(Toasted);
 Vue.use(Vuelidate);
 Vue.use(VueMoment);
+
+var moment = require('moment');
+
 Vue.use(new VueSocketio({
   debug: true,
   connection: 'http://127.0.0.1:8088'
@@ -56,6 +59,7 @@ axios.defaults.headers.common.Authorization = "Bearer " + store.state.token;
 
 
 // Vue.prototype.$Chartist = Chartist;
+Vue.prototype.moment = moment;
 
 /* eslint-disable no-new */
 new Vue({
