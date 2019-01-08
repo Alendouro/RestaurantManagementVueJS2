@@ -67,7 +67,6 @@
         <div class="row">
           <div class="col-sm-12">
             <md-button class="md-info md-block mt-1" @click="saveUser()" :disabled="$v.users.edit.$invalid">SAVE USER</md-button>
-            <md-button class="m-0 md-info md-block mt-1" @click="sendEmail()">Send Email</md-button>
           </div>
         </div>
         <div class="row" v-for="users in groupedItems(this.users.all, 3)" :key="users.id">
@@ -79,8 +78,7 @@
                 <h5 class="title">{{user.type}}</h5>
               </md-card-header>
               <md-card-content>
-                <!--<img  text :src="imageItem(user.photo_url)" :alt="user.name">-->
-                <img  src="https://www.bnl.gov/today/body_pics/2017/06/stephanhruszkewycz-hr.jpg" :alt="user.name">
+                <img  text :src="imageUser(user.photo_url)" :alt="user.name">
                 <br>
                 <div class="row">
                   <div class="col-md-12">
@@ -113,6 +111,8 @@ import swal from "sweetalert";
 import Multiselect from 'vue-multiselect'
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
+import urlAPI from '../../packages/url/URLFormatter.js'
+
 
 export default {
   components: { Multiselect, Datepicker },
@@ -178,20 +178,6 @@ export default {
           toastr.error('User was not found');
         }
       });
-    },
-    sendEmail(){
-      // using SendGrid's v3 Node.js Library
-      // https://github.com/sendgrid/sendgrid-nodejs
-      const sgMail = require('@sendgrid/mail');
-      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-      const msg = {
-        to: 'miguelalendouro@gmail.com',
-        from: 'm1@mail.pt',
-        subject: 'Sending with SendGrid is Fun',
-        text: 'and easy to do anywhere, even with Node.js',
-        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-      };
-      sgMail.send(msg);
     },
     editUser(user){
       this.users.edit = user;
@@ -275,6 +261,9 @@ export default {
         this.users.all = r.data;
       });
     },
+    imageUser(itemUrl){
+      return urlAPI.imageUser(itemUrl);
+    }
   },
   created(){
     this.getUsers();

@@ -22,5 +22,9 @@ export default{
    */
   imageItem(itemUrl) {
     return "http://restaurantmanagement.test/storage/items/" + itemUrl;
+  },
+
+  imageUser(photoURL) {
+    return "http://restaurantmanagement.test/storage/profiles/" + photoURL;
   }
 }

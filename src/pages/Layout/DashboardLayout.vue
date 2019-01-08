@@ -15,7 +15,7 @@
           <md-icon>work</md-icon>
          <p>End Shift</p>
           <!-- <p> Working since: {{user.last_shift_start}}</p> -->
-          <!-- <p>Y're working for {{Math.floor(this.$moment.duration(this.$moment(new Date()).diff(user.last_shift_start)).asHours()) }}h now - End Shift</p> -->
+          <!-- <p>Y're working for {{Math.floor(this.$moment.duration(this.$moment(new Date()).diff(user.last_shift_start)).asHours()) }}h now</p> -->
         </sidebar-link>
       </a> 
       <!-- All Users -->

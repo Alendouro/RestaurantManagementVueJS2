@@ -84,7 +84,6 @@
                       <th>Item</th>
                       <th>Price</th>
                       <th>Time</th>
-                      <th><md-icon>border_color</md-icon></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,7 +91,6 @@
                       <td class="pt-4">{{ order.item.name }}</td>
                       <td class="pt-4">{{ order.item.price }}€</td>
                       <td class="pt-4">{{ order.created_at }}</td>
-                      <td><md-button class="m-0">DELIVERED</md-button></td>
                     </tr>
                     </tbody>
                   </table>

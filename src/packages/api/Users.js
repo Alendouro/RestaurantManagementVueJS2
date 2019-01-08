@@ -117,7 +117,7 @@ export default {
 
       return false;
     });
-  }
+  },
   // --------- STATS ROUTES
   getUserPerformance(user){
     return axios({

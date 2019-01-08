@@ -30,6 +30,7 @@
 <script>
 import ItemsAPI from '../packages/api/Items.js';
 import swal from 'sweetalert';
+import urlAPI from '../packages/url/URLFormatter.js'
 
 export default {
   data() {
@@ -64,7 +65,7 @@ export default {
         });
     },
     imageItem(itemUrl){
-      return 'http://restaurantmanagement.test/storage/items/' + itemUrl;
+      return urlAPI.imageItem(itemUrl);
     }
   },
 
